@@ -97,7 +97,6 @@ const PHOTO_DESCRIPTIONS = [
   'За секунду до...',
 ];
 
-// console.log(PHOTO_DESCRIPTIONS);
 /* Функция по генерации массива неповторяющихся значений */
 
 const NUMBERS_ARRAY = [];
@@ -109,7 +108,6 @@ function createNumbersArray (numbersAmont) {
   }
 
   return NUMBERS_ARRAY;
-  // console.log(NUMBERS);
 }
 
 function getUniqueNumbersArray (arrayLength, numbersAmont) {
@@ -121,19 +119,12 @@ function getUniqueNumbersArray (arrayLength, numbersAmont) {
   let swap;
 
   while (i--) {
-    // console.log('значение переменной i = '+i);
-    // console.log('значение переменной numbers[i] = '+numbers[i]);
     j = getRandomPositiveInteger(0, i);
-    // console.log('значение переменной j = ' + j);
-    // console.log('значение numbers[j] = ' + numbers[j]);
     swap = NUMBERS_ARRAY[i];
     NUMBERS_ARRAY[i] = NUMBERS_ARRAY[j];
     NUMBERS_ARRAY[j] = swap;
-    // console.log('меняю местами ' + numbers[j] + ' и ' + numbers[i] );
   }
-
   CHANGED_NUMBERS_ARRAY = NUMBERS_ARRAY.slice(0, arrayLength);
-  // console.log(CHANGED_NUMBERS_ARRAY);
   return CHANGED_NUMBERS_ARRAY;
 }
 
@@ -165,7 +156,6 @@ function createPhotoCard () {
 /* Создание массива из 25 элементов */
 
 const similarObjects = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
-// console.log(similarObjects);
 
 function createDifferentObjects ()  {
   for (let i = 0; i < OBJECTS_AMOUNT; i++) {
@@ -176,8 +166,6 @@ function createDifferentObjects ()  {
 
   return similarObjects;
 }
-
-console.log(similarObjects);
 
 /* Вызовы функций */
 
