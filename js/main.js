@@ -23,7 +23,7 @@ const createRandomArrayElement = (elements) => elements[getRandomPositiveInteger
 /* Количество создаваемых объектов */
 
 const OBJECTS_AMOUNT = 25;
-
+const COMMENTS_AMOUNT = 100;
 
 /* Генерация объекта */
 /* Наборы данных */
@@ -102,6 +102,8 @@ const PHOTO_DESCRIPTIONS = [
 const NUMBERS_ARRAY = [];
 let CHANGED_NUMBERS_ARRAY = [];
 
+/* Создание упорядоченного массива */
+
 function createNumbersArray (numbersAmont) {
   for (let i = 0; i < numbersAmont; i ++ ) {
     NUMBERS_ARRAY[i] = i +1;
@@ -110,11 +112,13 @@ function createNumbersArray (numbersAmont) {
   return NUMBERS_ARRAY;
 }
 
-function getUniqueNumbersArray (arrayLength, numbersAmont) {
+/* Создание неупорядоченного массива */
 
-  createNumbersArray(numbersAmont);
+function getUniqueNumbersArray (numbersAmount) {
 
-  let i = numbersAmont;
+  createNumbersArray(numbersAmount);
+
+  let i = numbersAmount;
   let j = 0;
   let swap;
 
@@ -124,8 +128,14 @@ function getUniqueNumbersArray (arrayLength, numbersAmont) {
     NUMBERS_ARRAY[i] = NUMBERS_ARRAY[j];
     NUMBERS_ARRAY[j] = swap;
   }
+
+  return NUMBERS_ARRAY;
+}
+
+/* Создание нового массива на основе неупорядоченного */
+
+function getNewArray (arrayLength) {
   CHANGED_NUMBERS_ARRAY = NUMBERS_ARRAY.slice(0, arrayLength);
-  return CHANGED_NUMBERS_ARRAY;
 }
 
 /* Объекты */
@@ -157,8 +167,28 @@ function createPhotoCard () {
 
 const similarObjects = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
 
-function createDifferentObjects ()  {
+/* Создание случайных комментариев */
+
+function createDifferentComments (numbersAmount)  {
+
+  getUniqueNumbersArray(numbersAmount);
+  getNewArray(numbersAmount);
+
   for (let i = 0; i < OBJECTS_AMOUNT; i++) {
+    similarObjects[i].comment.id = CHANGED_NUMBERS_ARRAY[i];
+    similarObjects[i].comment.avatar = `img/avatar-${getRandomPositiveInteger(0,6)}.svg`;
+  }
+}
+
+/* Создание случайных карточек */
+
+function createDifferentObjects (commentNumbersAmount, photoNumbersAmount)  {
+  createDifferentComments(commentNumbersAmount);
+
+  getUniqueNumbersArray(photoNumbersAmount);
+  getNewArray(photoNumbersAmount);
+
+  for (let i = 0; i < photoNumbersAmount; i++) {
     similarObjects[i].id = CHANGED_NUMBERS_ARRAY[i];
     similarObjects[i].url = `photos/${CHANGED_NUMBERS_ARRAY[i]}.jpg`;
     similarObjects[i].description = PHOTO_DESCRIPTIONS[CHANGED_NUMBERS_ARRAY[i]];
@@ -167,15 +197,10 @@ function createDifferentObjects ()  {
   return similarObjects;
 }
 
+console.log(similarObjects);
+
 /* Вызовы функций */
 
-getUniqueNumbersArray(OBJECTS_AMOUNT, OBJECTS_AMOUNT);
-
-getRandomPositiveInteger(1,2);
-
 checkStringLength(100, 140);
-createPhotoCard();
 
-createDifferentObjects();
-
-
+createDifferentObjects(COMMENTS_AMOUNT, OBJECTS_AMOUNT);
