@@ -1,9 +1,5 @@
 import {getRandomPositiveInteger} from './util.js';
 
-function createRandomArrayElement (elements) {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-}
-
 const OBJECTS_AMOUNT = 25;
 const COMMENTS_MAX_ID = 150;
 const COMMENTS_MIN_AMOUNT = 0;
@@ -84,6 +80,10 @@ const PHOTO_DESCRIPTIONS = [
 
 const NUMBERS_ARRAY = [];
 let changedNumbers = [];
+
+function createRandomArrayElement (elements) {
+  return elements[getRandomPositiveInteger(0, elements.length - 1)];
+}
 
 function createNumbersArray (numbersAmount) {
   for (let i = 0; i < numbersAmount; i ++ ) {
