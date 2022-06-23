@@ -1,4 +1,5 @@
 import './util.js';
 import {createSimilarPhotoCards} from './data.js';
+import './picture.js';
 
-console.log(createSimilarPhotoCards(25));
+createSimilarPhotoCards(25);
