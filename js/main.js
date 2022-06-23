@@ -1,6 +1,3 @@
-// Функция генерации случайных положительных чисел в заданном диапазоне включая крайние значения
-// Функция взята из источника и доработана. Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
-
 function getRandomPositiveInteger (a, b) {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
@@ -10,24 +7,24 @@ function getRandomPositiveInteger (a, b) {
   return Math.floor(result);
 }
 
-/* Функция проверки длины комментария */
-
 function checkStringLength (string, length) {
   return string.length <= length;
 }
 
-/* Выбор случайного элемента массива */
+checkStringLength(100, 140);
 
-const createRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
-
-/* Количество создаваемых объектов */
+function createRandomArrayElement (elements) {
+  return elements[getRandomPositiveInteger(0, elements.length - 1)];
+}
 
 const OBJECTS_AMOUNT = 25;
 const COMMENTS_MAX_ID = 150;
 const COMMENTS_MIN_AMOUNT = 0;
 const COMMENTS_MAX_AMOUNT = 4;
-
-/* Наборы данных */
+const LIKES_MIN_AMOUNT = 15;
+const LIKES_MAX_AMOUNT = 200;
+const AVATAR_MIN_INDEX = 1;
+const AVATAR_MAX_INDEX = 6;
 
 const NAMES = [
   'Алена',
@@ -98,23 +95,18 @@ const PHOTO_DESCRIPTIONS = [
   'За секунду до...',
 ];
 
-/* Создание упорядоченного массива */
-
 const NUMBERS_ARRAY = [];
-let CHANGED_NUMBERS_ARRAY = [];
+let changedNumbers = [];
 
-function createNumbersArray (numbersAmont) {
-  for (let i = 0; i < numbersAmont; i ++ ) {
+function createNumbersArray (numbersAmount) {
+  for (let i = 0; i < numbersAmount; i ++ ) {
     NUMBERS_ARRAY[i] = i +1;
   }
 
   return NUMBERS_ARRAY;
 }
 
-/* Создание неупорядоченного массива */
-
-function getUniqueNumbersArray (numbersAmount) {
-
+function createUniqueNumbersArray (numbersAmount) {
   createNumbersArray(numbersAmount);
 
   let i = numbersAmount;
@@ -131,87 +123,58 @@ function getUniqueNumbersArray (numbersAmount) {
   return NUMBERS_ARRAY;
 }
 
-/* Создание нового массива на основе неупорядоченного */
-
-function getNewArray (arrayLength) {
-  CHANGED_NUMBERS_ARRAY = NUMBERS_ARRAY.slice(0, arrayLength);
+function cloneArray (arrayLength) {
+  changedNumbers = NUMBERS_ARRAY.slice(0, arrayLength);
+  return changedNumbers;
 }
-
-/* Создание пустого комментария */
 
 function createComment () {
   return {
-    id: 0,
-    avatar: 0,
+    id: null,
+    avatar: '',
     message: createRandomArrayElement(MESSAGES),
     name: createRandomArrayElement(NAMES),
   };
 }
 
-/* Создание массива пустых комментариев */
-
-let differentComments = [];
-
-function getDifferenComments () {
-  differentComments = Array.from({length: getRandomPositiveInteger(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)}, createComment);
-  return differentComments;
-}
-
-/* Заполение массива пустых комментариев сгенерированными данными */
-
 function createDifferentComments ()  {
-  getDifferenComments();
-  getUniqueNumbersArray(COMMENTS_MAX_ID);
-  getNewArray(COMMENTS_MAX_ID);
+  const DIFFERENT_COMMNETS = Array.from({length: getRandomPositiveInteger(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)}, createComment);
+  createUniqueNumbersArray(COMMENTS_MAX_ID);
+  cloneArray(COMMENTS_MAX_ID);
 
-  for (let i = 0; i < differentComments.length; i++) {
-    differentComments[i].id = CHANGED_NUMBERS_ARRAY[i];
-    differentComments[i].avatar = `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`;
+  for (let i = 0; i < DIFFERENT_COMMNETS.length; i++) {
+    DIFFERENT_COMMNETS[i].id = changedNumbers[i];
+    DIFFERENT_COMMNETS[i].avatar = `img/avatar-${getRandomPositiveInteger(AVATAR_MIN_INDEX, AVATAR_MAX_INDEX)}.svg`;
   }
 
-  return differentComments;
+  return DIFFERENT_COMMNETS;
 }
-
-/* Создание массива из массивов со случайным количеством сгенерированных комментариев для карточек фото в соответствии с количеством карточек фото */
-
-const similarComments = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
-
-/* Создание пустой карточки фото */
 
 function createPhotoCard () {
   return {
-    id: 0,
-    url: 0,
-    description: 0,
-    likes: getRandomPositiveInteger(15, 200),
-    comment: 0,
+    id: null,
+    url: '',
+    description: '',
+    likes: getRandomPositiveInteger(LIKES_MIN_AMOUNT, LIKES_MAX_AMOUNT),
+    comment: '',
   };
 }
 
-/* Создание массива из заданного количества пустых карточек фото */
-
-const similarPhotoCards = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
-
-/* Заполнение массива пустых карточек фото сгенерированными данными */
-
 function createSimilarPhotoCards (photoNumbersAmount)  {
-  createDifferentComments();
+  const SIMILAR_PHOTO_CARDS = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
+  const SIMILAR_COMMENTS = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
 
-  getUniqueNumbersArray(photoNumbersAmount);
-  getNewArray(photoNumbersAmount);
+  createUniqueNumbersArray(photoNumbersAmount);
+  cloneArray(photoNumbersAmount);
 
   for (let i = 0; i < photoNumbersAmount; i++) {
-    similarPhotoCards[i].id = CHANGED_NUMBERS_ARRAY[i];
-    similarPhotoCards[i].url = `photos/${CHANGED_NUMBERS_ARRAY[i]}.jpg`;
-    similarPhotoCards[i].description = PHOTO_DESCRIPTIONS[CHANGED_NUMBERS_ARRAY[i]];
-    similarPhotoCards[i].comment = similarComments[i];
+    SIMILAR_PHOTO_CARDS[i].id = changedNumbers[i];
+    SIMILAR_PHOTO_CARDS[i].url = `photos/${changedNumbers[i]}.jpg`;
+    SIMILAR_PHOTO_CARDS[i].description = PHOTO_DESCRIPTIONS[changedNumbers[i]];
+    SIMILAR_PHOTO_CARDS[i].comment = SIMILAR_COMMENTS[i];
   }
 
-  return similarPhotoCards;
+  return SIMILAR_PHOTO_CARDS;
 }
-
-// /* Вызовы функций */
-
-checkStringLength(100, 140);
 
 createSimilarPhotoCards(OBJECTS_AMOUNT);
