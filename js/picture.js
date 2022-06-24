@@ -20,4 +20,5 @@ similarPhotos.forEach(
 
 picturesContainer.appendChild(similarPhotoFragment);
 
+export {similarPhotos};
 
