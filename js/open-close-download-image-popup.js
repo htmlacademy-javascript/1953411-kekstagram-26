@@ -1,10 +1,12 @@
 const downloadInput = document.querySelector('.img-upload__input');
 const downloadImagePopup = document.querySelector('.img-upload__overlay');
 const downloadImageCloseButton =  document.querySelector('.img-upload__cancel');
+const hashtagFielf = document.querySelector('.text__hashtags');
+const descriptionField = document.querySelector('.text__description');
 
 
 const onPopupEscapeKeydown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (evt.key === 'Escape'  && hashtagFielf !== document.activeElement && descriptionField !== document.activeElement) {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
