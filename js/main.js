@@ -1,5 +1,4 @@
 import './util.js';
-import {createSimilarPhotoCards} from './data.js';
+import './data.js';
 import './picture.js';
-
-createSimilarPhotoCards(25);
+import './create-big-picture.js';
