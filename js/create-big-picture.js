@@ -1,9 +1,16 @@
-import {similarPhotos} from './picture.js';
+import {createSimilarPhotos} from './picture.js';
 
-const photos = similarPhotos;
+const photos = createSimilarPhotos();
 const pictures = document.querySelectorAll('.picture');
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
+
+const onBigPictureEscapeKyedown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeBigPicture();
+  }
+};
 
 const createNewElement = (tagName, className, textContent) => {
   const newTag = document.createElement(tagName);
@@ -33,11 +40,17 @@ const createDomComment = (element) => {
   return newComment;
 };
 
+function openBigPicture () {
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+
+  document.addEventListener('keydown', onBigPictureEscapeKyedown);
+}
+
 for (let i = 0; i < pictures.length; i++) {
   pictures[i].addEventListener('click', (evt) => {
     evt.preventDefault();
-    bigPicture.classList.remove('hidden');
-    document.body.classList.add('modal-open');
+    openBigPicture();
 
     const socialComments = bigPicture.querySelector('.social__comments');
 
@@ -62,18 +75,18 @@ for (let i = 0; i < pictures.length; i++) {
     bigPictureSocial.querySelector('.likes-count').textContent = photos[i].likes;
     bigPictureSocial.querySelector('.social__caption').textContent = photos[i].description;
     bigPictureSocial.querySelector('.comments-count').textContent = photos[i].comment.length;
-
   });
 }
 
-closeButton.addEventListener('click', () => {
+function closeBigPicture () {
   bigPicture.classList.add('hidden');
   document.body.classList.remove('modal-open');
+
+  document.removeEventListener('keydown', onBigPictureEscapeKyedown);
+}
+
+closeButton.addEventListener('click', () => {
+  closeBigPicture();
 });
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
-    bigPicture.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  }
-});
+
