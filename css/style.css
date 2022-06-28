@@ -695,6 +695,7 @@ main {
   color: #000000;
 
   border-radius: 5px;
+  resize: none;
 }
 
 
@@ -1394,4 +1395,22 @@ main {
 
 .hidden {
   display: none;
+}
+
+.img-upload__field-wrapper {
+  position: relative;
+}
+
+.form__error {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  text-transform: none;
+  color: #ffe753;
+}
+
+.img-upload__field-wrapper:nth-child(2) .form__error {
+  bottom: -20px;
 }
