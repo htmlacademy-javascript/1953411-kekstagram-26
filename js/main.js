@@ -8,10 +8,9 @@ import {createPhotos, renderPhotos} from './picture.js';
 const pictures = createPhotos(generatedPhotos);
 renderPhotos(pictures);
 
-import {createBigPicture} from './create-big-picture.js';
+import {openBigPicture} from './create-big-picture.js';
 
-const pictureElements = document.querySelectorAll('.picture');
-createBigPicture(pictureElements, generatedPhotos);
+openBigPicture(generatedPhotos);
 
 import {addUploadPopupEventListener} from './open-close-download-image-popup.js';
 

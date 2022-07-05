@@ -1,5 +1,5 @@
 import {createNewElement} from './util.js';
-import {openBigPicture} from './open-close-big-picture.js';
+import {showBigPicturePopup} from './open-close-big-picture.js';
 
 const AVATAR_WIDTH = '35';
 const AVATAR_HEIGHT = '35';
@@ -34,34 +34,39 @@ function replaceComment (elements, elementIndex) {
   }
 }
 
-function createBigPicture (pictures, data) {
-  pictures.forEach( (picture) => {
-    picture.addEventListener('click', (evt) => {
+function openBigPicture (array) {
+  const pictureContainerElement = document.querySelector('.pictures');
+  pictureContainerElement.addEventListener('click', (evt) => {
+    if (evt.target.matches('img')) {
       evt.preventDefault();
-      openBigPicture();
+      showBigPicturePopup();
 
       const pictureFragmentElements =[ ...document.querySelectorAll('.picture') ];
 
       const targetIndex = pictureFragmentElements.indexOf(evt.target.parentElement);
 
-      replaceComment(data, targetIndex);
-
-      const bigPictureElement = document.querySelector('.big-picture');
-
-      const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
-      const bigPictureImg = bigPictureElement.querySelector('.big-picture__img');
-
-      bigPictureImg.querySelector('img').src = data[targetIndex].url;
-
-      bigPictureImg.querySelector('img').alt = data[targetIndex].description;
-
-      bigPictureSocial.querySelector('.likes-count').textContent = data[targetIndex].likes;
-
-      bigPictureSocial.querySelector('.social__caption').textContent = data[targetIndex].description;
-
-      bigPictureSocial.querySelector('.comments-count').textContent = data[targetIndex].comment.length;
-    });
+      replaceBigPictureData(array, targetIndex);
+    }
   });
 }
 
-export {createBigPicture};
+function replaceBigPictureData (pictures, index) {
+  replaceComment(pictures, index);
+
+  const bigPictureElement = document.querySelector('.big-picture');
+
+  const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
+  const bigPictureImg = bigPictureElement.querySelector('.big-picture__img');
+
+  bigPictureImg.querySelector('img').src = pictures[index].url;
+
+  bigPictureImg.querySelector('img').alt = pictures[index].description;
+
+  bigPictureSocial.querySelector('.likes-count').textContent = pictures[index].likes;
+
+  bigPictureSocial.querySelector('.social__caption').textContent = pictures[index].description;
+
+  bigPictureSocial.querySelector('.comments-count').textContent = pictures[index].comment.length;
+}
+
+export {openBigPicture};

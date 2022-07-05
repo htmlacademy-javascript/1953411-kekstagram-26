@@ -8,24 +8,24 @@ bigPictureElement.querySelector('.big-picture__social').querySelector('.comments
 const onBigPictureEscapeKyedown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
-    closeBigPicture();
+    hideBigPicturePopup();
   }
 };
 
-function openBigPicture () {
+function showBigPicturePopup () {
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onBigPictureEscapeKyedown);
-  closeButtonElement.addEventListener('click', closeBigPicture);
+  closeButtonElement.addEventListener('click', hideBigPicturePopup);
 }
 
-function closeBigPicture () {
+function hideBigPicturePopup () {
   bigPictureElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
   document.removeEventListener('keydown', onBigPictureEscapeKyedown);
-  closeButtonElement.removeEventListener('click', closeBigPicture);
+  closeButtonElement.removeEventListener('click', hideBigPicturePopup);
 }
 
-export {openBigPicture, closeBigPicture};
+export {showBigPicturePopup, hideBigPicturePopup};
