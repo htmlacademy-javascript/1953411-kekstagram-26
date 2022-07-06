@@ -1,10 +1,6 @@
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
-bigPictureElement.querySelector('.big-picture__social').querySelector('.social__comment-count').classList.add('hidden');
-
-bigPictureElement.querySelector('.big-picture__social').querySelector('.comments-loader').classList.add('hidden');
-
 const onBigPictureEscapeKyedown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();

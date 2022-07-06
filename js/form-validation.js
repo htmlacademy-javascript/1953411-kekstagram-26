@@ -44,7 +44,7 @@ function validateHashtagUniqueness () {
 
   for (let i = 0; i < hashtagWords.length; i++) {
     for (let j = i + 1; j < hashtagWords.length; j++) {
-      if (hashtagWords[i] === hashtagWords[j]) {
+      if (hashtagWords[i].toUpperCase() === hashtagWords[j].toUpperCase()) {
         result = false;
       }
     }
