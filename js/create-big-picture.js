@@ -56,11 +56,11 @@ function replaceBigPictureData (pictures, index) {
   const bigPictureElement = document.querySelector('.big-picture');
 
   const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
-  const bigPictureImg = bigPictureElement.querySelector('.big-picture__img');
+  const bigPictureImg = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
 
-  bigPictureImg.querySelector('img').src = pictures[index].url;
+  bigPictureImg.src = pictures[index].url;
 
-  bigPictureImg.querySelector('img').alt = pictures[index].description;
+  bigPictureImg.alt = pictures[index].description;
 
   bigPictureSocial.querySelector('.likes-count').textContent = pictures[index].likes;
 

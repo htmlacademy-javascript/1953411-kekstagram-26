@@ -1,12 +1,12 @@
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
-const onBigPictureEscapeKyedown = (evt) => {
+function onBigPictureEscapeKyedown (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     hideBigPicturePopup();
   }
-};
+}
 
 function showBigPicturePopup () {
   bigPictureElement.classList.remove('hidden');
