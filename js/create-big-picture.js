@@ -78,9 +78,7 @@ function openBigPicture (array) {
       evt.preventDefault();
       showBigPicturePopup();
 
-      const pictureFragmentElements =[ ...document.querySelectorAll('.picture') ];
-
-      const targetIndex = pictureFragmentElements.indexOf(evt.target.parentElement);
+      const targetIndex = evt.target.parentElement.dataset.id;
 
       replaceBigPictureData(array, targetIndex);
     }
