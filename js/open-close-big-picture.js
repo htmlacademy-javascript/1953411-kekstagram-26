@@ -24,4 +24,4 @@ function hideBigPicturePopup () {
   closeButtonElement.removeEventListener('click', hideBigPicturePopup);
 }
 
-export {showBigPicturePopup, hideBigPicturePopup};
+export {showBigPicturePopup};
