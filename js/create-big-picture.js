@@ -1,27 +1,13 @@
-import {createSimilarPhotos} from './picture.js';
+import {createNewElement} from './util.js';
+import {showBigPicturePopup} from './open-close-big-picture.js';
 
-const photos = createSimilarPhotos();
-const pictures = document.querySelectorAll('.picture');
-const bigPicture = document.querySelector('.big-picture');
-const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const AVATAR_WIDTH = '35';
+const AVATAR_HEIGHT = '35';
+const SHOW_COMMENTS_AMOUNT = 5;
+let commentsAmount = SHOW_COMMENTS_AMOUNT;
 
-const onBigPictureEscapeKyedown = (evt) => {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closeBigPicture();
-  }
-};
-
-const createNewElement = (tagName, className, textContent) => {
-  const newTag = document.createElement(tagName);
-  newTag.classList.add(className);
-
-  if (textContent) {
-    newTag.textContent = textContent;
-  }
-
-  return newTag;
-};
+let commentsLoaderButtonElement = document.querySelector('.social__comments-loader');
+const socialCommentsElement = document.querySelector('.big-picture').querySelector('.social__comments');
 
 const createDomComment = (element) => {
   const newComment = createNewElement('li', 'social__comment');
@@ -29,8 +15,8 @@ const createDomComment = (element) => {
   const image = createNewElement('img', 'social__picture');
   image.src = element.avatar;
   image.alt = element.name;
-  image.width = '35';
-  image.height = '35';
+  image.width = AVATAR_WIDTH;
+  image.height = AVATAR_HEIGHT;
   newComment.appendChild(image);
 
   const paragraph = createNewElement('p', 'social__text');
@@ -40,53 +26,85 @@ const createDomComment = (element) => {
   return newComment;
 };
 
-function openBigPicture () {
-  bigPicture.classList.remove('hidden');
-  document.body.classList.add('modal-open');
+function createDomCommentButton () {
+  const newButton = createNewElement('button', 'social__comments-loader', 'Загрузить еще');
 
-  document.addEventListener('keydown', onBigPictureEscapeKyedown);
+  newButton.type = 'button';
+  newButton.classList.add('comments-loader');
+
+  return newButton;
 }
 
-for (let i = 0; i < pictures.length; i++) {
-  pictures[i].addEventListener('click', (evt) => {
-    evt.preventDefault();
-    openBigPicture();
+function replaceComment (pictures, pictureIndex) {
 
-    const socialComments = bigPicture.querySelector('.social__comments');
+  commentsLoaderButtonElement = document.querySelector('.social__comments-loader');
 
-    while (socialComments.firstChild) {
-      socialComments.removeChild(socialComments.firstChild);
+  function onLoadButtonClick () {
+    replaceComment(pictures, pictureIndex);
+  }
+
+  if (pictures[pictureIndex].comment.length < commentsAmount) {
+    commentsAmount = pictures[pictureIndex].comment.length;
+  }
+
+  const commentsFragment = document.createDocumentFragment();
+
+  socialCommentsElement.textContent = '';
+
+  pictures[pictureIndex].comment.slice(0, commentsAmount).forEach( (comment) => {
+    const newDomComment =  createDomComment(comment);
+    commentsFragment.appendChild(newDomComment);
+  });
+
+  const commentsCountElement = document.querySelector('.social__comment-count');
+
+  commentsCountElement.textContent = `${commentsAmount} из ${pictures[pictureIndex].comment.length} комментариев`;
+
+  socialCommentsElement.appendChild(commentsFragment);
+  if (commentsAmount === pictures[pictureIndex].comment.length) {
+    commentsLoaderButtonElement.classList.add('hidden');
+  } else {
+    commentsLoaderButtonElement.classList.remove('hidden');
+    commentsLoaderButtonElement.addEventListener('click',onLoadButtonClick, {once: true});
+  }
+
+  commentsAmount+= SHOW_COMMENTS_AMOUNT;
+}
+
+function openBigPicture (array) {
+  const pictureContainerElement = document.querySelector('.pictures');
+  pictureContainerElement.addEventListener('click', (evt) => {
+    if (evt.target.matches('img')) {
+      evt.preventDefault();
+      showBigPicturePopup();
+
+      const targetIndex = evt.target.parentElement.dataset.id;
+
+      replaceBigPictureData(array, targetIndex);
     }
-
-    for (let j = 0; j < photos[i].comment.length; j++) {
-      const newDomComment =  createDomComment(photos[i].comment[j]);
-      socialComments.appendChild(newDomComment);
-    }
-
-    const bigPictureSocial = bigPicture.querySelector('.big-picture__social');
-    const bigPictureImg = bigPicture.querySelector('.big-picture__img');
-
-    bigPictureSocial.querySelector('.social__comment-count').classList.add('hidden');
-    bigPictureSocial.querySelector('.comments-loader').classList.add('hidden');
-
-    bigPictureImg.querySelector('img').src = photos[i].url;
-    bigPictureImg.querySelector('img').alt = photos[i].description;
-
-    bigPictureSocial.querySelector('.likes-count').textContent = photos[i].likes;
-    bigPictureSocial.querySelector('.social__caption').textContent = photos[i].description;
-    bigPictureSocial.querySelector('.comments-count').textContent = photos[i].comment.length;
   });
 }
 
-function closeBigPicture () {
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+function replaceBigPictureData (pictures, index) {
+  const bigPictureElement = document.querySelector('.big-picture');
+  const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
+  const bigPictureImg = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
 
-  document.removeEventListener('keydown', onBigPictureEscapeKyedown);
+  commentsAmount = SHOW_COMMENTS_AMOUNT;
+
+  bigPictureSocial.removeChild(commentsLoaderButtonElement);
+
+  socialCommentsElement.insertAdjacentElement('afterend', createDomCommentButton());
+
+  replaceComment(pictures, index);
+
+  bigPictureImg.src = pictures[index].url;
+
+  bigPictureImg.alt = pictures[index].description;
+
+  bigPictureSocial.querySelector('.likes-count').textContent = pictures[index].likes;
+
+  bigPictureSocial.querySelector('.social__caption').textContent = pictures[index].description;
 }
 
-closeButton.addEventListener('click', () => {
-  closeBigPicture();
-});
-
-
+export {openBigPicture};

@@ -1,30 +1,31 @@
 import {addFormValidation, removeFormValidation} from './form-validation.js';
 
-const imageUploadInput = document.querySelector('.img-upload__input');
-const downloadImagePopup = document.querySelector('.img-upload__overlay');
-const downloadImageCloseButton =  document.querySelector('.img-upload__cancel');
-const hashtagFielf = document.querySelector('.text__hashtags');
-const descriptionField = document.querySelector('.text__description');
+const imageUploadInputElement = document.querySelector('.img-upload__input');
+const downloadImagePopupElement = document.querySelector('.img-upload__overlay');
+const downloadImageCloseButtonElement =  document.querySelector('.img-upload__cancel');
 
 const onPopupEscapeKeydown = (evt) => {
-  if (evt.key === 'Escape'  && hashtagFielf !== document.activeElement && descriptionField !== document.activeElement) {
+  const hashtagFieldElement = document.querySelector('.text__hashtags');
+  const descriptionFieldElement = document.querySelector('.text__description');
+
+  if (evt.key === 'Escape'  && hashtagFieldElement !== document.activeElement && descriptionFieldElement !== document.activeElement) {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
 };
 
 function addUploadPopupEventListener () {
-  imageUploadInput.addEventListener('change', openDownloadImagePopup);
+  imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
 }
 function removeUploadPopupEventListener () {
-  imageUploadInput.removeEventListener('change', openDownloadImagePopup);
+  imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
 }
 
 function openDownloadImagePopup () {
-  downloadImagePopup.classList.remove('hidden');
+  downloadImagePopupElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  downloadImageCloseButton.addEventListener('click', closeDownloadImagePopup);
+  downloadImageCloseButtonElement.addEventListener('click', closeDownloadImagePopup);
   document.addEventListener('keydown', onPopupEscapeKeydown);
   removeUploadPopupEventListener();
   addFormValidation();
@@ -32,15 +33,15 @@ function openDownloadImagePopup () {
 
 
 function closeDownloadImagePopup () {
-  downloadImagePopup.classList.add('hidden');
+  downloadImagePopupElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  downloadImageCloseButton.removeEventListener('click', closeDownloadImagePopup);
+  downloadImageCloseButtonElement.removeEventListener('click', closeDownloadImagePopup);
   document.removeEventListener('keydown', onPopupEscapeKeydown);
   addUploadPopupEventListener();
   removeFormValidation();
 
-  imageUploadInput.value = '';
+  imageUploadInputElement.value = '';
 }
 
 export {closeDownloadImagePopup, addUploadPopupEventListener};

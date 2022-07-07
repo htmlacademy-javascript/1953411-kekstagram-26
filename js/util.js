@@ -11,4 +11,15 @@ function checkStringLength (string, length) {
   return string.length <= length;
 }
 
-export {checkStringLength, getRandomPositiveInteger};
+const createNewElement = (tagName, className, textContent) => {
+  const newTag = document.createElement(tagName);
+  newTag.classList.add(className);
+
+  if (textContent) {
+    newTag.textContent = textContent;
+  }
+
+  return newTag;
+};
+
+export {checkStringLength, getRandomPositiveInteger, createNewElement};

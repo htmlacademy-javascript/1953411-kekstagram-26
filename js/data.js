@@ -3,7 +3,7 @@ import {getRandomPositiveInteger} from './util.js';
 const OBJECTS_AMOUNT = 25;
 const COMMENTS_MAX_ID = 150;
 const COMMENTS_MIN_AMOUNT = 0;
-const COMMENTS_MAX_AMOUNT = 4;
+const COMMENTS_MAX_AMOUNT = 30;
 const LIKES_MIN_AMOUNT = 15;
 const LIKES_MAX_AMOUNT = 200;
 const AVATAR_MIN_INDEX = 1;
@@ -78,7 +78,7 @@ const PHOTO_DESCRIPTIONS = [
   'За секунду до...',
 ];
 
-const NUMBERS_ARRAY = [];
+const numbers = [];
 let changedNumbers = [];
 
 function createRandomArrayElement (elements) {
@@ -87,10 +87,10 @@ function createRandomArrayElement (elements) {
 
 function createNumbersArray (numbersAmount) {
   for (let i = 0; i < numbersAmount; i ++ ) {
-    NUMBERS_ARRAY[i] = i +1;
+    numbers[i] = i +1;
   }
 
-  return NUMBERS_ARRAY;
+  return numbers;
 }
 
 function createUniqueNumbersArray (numbersAmount) {
@@ -102,16 +102,16 @@ function createUniqueNumbersArray (numbersAmount) {
 
   while (i--) {
     j = getRandomPositiveInteger(0, i);
-    swap = NUMBERS_ARRAY[i];
-    NUMBERS_ARRAY[i] = NUMBERS_ARRAY[j];
-    NUMBERS_ARRAY[j] = swap;
+    swap = numbers[i];
+    numbers[i] = numbers[j];
+    numbers[j] = swap;
   }
 
-  return NUMBERS_ARRAY;
+  return numbers;
 }
 
 function cloneArray (arrayLength) {
-  changedNumbers = NUMBERS_ARRAY.slice(0, arrayLength);
+  changedNumbers = numbers.slice(0, arrayLength);
   return changedNumbers;
 }
 
@@ -125,16 +125,16 @@ function createComment () {
 }
 
 function createDifferentComments ()  {
-  const DIFFERENT_COMMNETS = Array.from({length: getRandomPositiveInteger(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)}, createComment);
+  const differentComments = Array.from({length: getRandomPositiveInteger(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)}, createComment);
   createUniqueNumbersArray(COMMENTS_MAX_ID);
   cloneArray(COMMENTS_MAX_ID);
 
-  for (let i = 0; i < DIFFERENT_COMMNETS.length; i++) {
-    DIFFERENT_COMMNETS[i].id = changedNumbers[i];
-    DIFFERENT_COMMNETS[i].avatar = `img/avatar-${getRandomPositiveInteger(AVATAR_MIN_INDEX, AVATAR_MAX_INDEX)}.svg`;
+  for (let i = 0; i < differentComments.length; i++) {
+    differentComments[i].id = changedNumbers[i];
+    differentComments[i].avatar = `img/avatar-${getRandomPositiveInteger(AVATAR_MIN_INDEX, AVATAR_MAX_INDEX)}.svg`;
   }
 
-  return DIFFERENT_COMMNETS;
+  return differentComments;
 }
 
 function createPhotoCard () {
@@ -148,20 +148,20 @@ function createPhotoCard () {
 }
 
 function createSimilarPhotoCards (photoNumbersAmount)  {
-  const SIMILAR_PHOTO_CARDS = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
-  const SIMILAR_COMMENTS = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
+  const photoCards = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
+  const comments = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
 
   createUniqueNumbersArray(photoNumbersAmount);
   cloneArray(photoNumbersAmount);
 
   for (let i = 0; i < photoNumbersAmount; i++) {
-    SIMILAR_PHOTO_CARDS[i].id = changedNumbers[i];
-    SIMILAR_PHOTO_CARDS[i].url = `photos/${changedNumbers[i]}.jpg`;
-    SIMILAR_PHOTO_CARDS[i].description = PHOTO_DESCRIPTIONS[changedNumbers[i]];
-    SIMILAR_PHOTO_CARDS[i].comment = SIMILAR_COMMENTS[i];
+    photoCards[i].id = changedNumbers[i];
+    photoCards[i].url = `photos/${changedNumbers[i]}.jpg`;
+    photoCards[i].description = PHOTO_DESCRIPTIONS[changedNumbers[i]];
+    photoCards[i].comment = comments[i];
   }
 
-  return SIMILAR_PHOTO_CARDS;
+  return photoCards;
 }
 
 export {createSimilarPhotoCards};
