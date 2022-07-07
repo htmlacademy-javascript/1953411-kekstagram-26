@@ -24,15 +24,15 @@ let hashtagWords = hashtagValue.split(' ');
 
 function validateHashtag () {
   hashtagValue = hashtagFielfElement.value.trim();
-  hashtagWords = hashtagValue.split(' ');
-  let result = true;
+  const hashtagValues = hashtagValue.split(' ');
+  hashtagWords = hashtagValues.filter((word) =>  word !== '');
 
   for (let i = 0; i < hashtagWords.length; i++) {
     if (!re.test(hashtagWords[i])) {
-      result = false;
+      return false;
     }
   }
-  return result;
+  return true;
 }
 
 function validateHashtagAmount () {
@@ -40,26 +40,26 @@ function validateHashtagAmount () {
 }
 
 function validateHashtagUniqueness () {
-  let result = true;
-
   for (let i = 0; i < hashtagWords.length; i++) {
     for (let j = i + 1; j < hashtagWords.length; j++) {
       if (hashtagWords[i].toUpperCase() === hashtagWords[j].toUpperCase()) {
-        result = false;
+        return false;
       }
     }
   }
-  return result;
+  return true;
 }
 
 function validateTextfield () {
   return checkStringLength(descriptionFieldElement.value, MAX_TEXT_LENGTH);
 }
 
-pristine.addValidator(hashtagFielfElement, validateHashtag, 'Должно начинаться с # и содержать менее 20 символов!');
-pristine.addValidator(hashtagFielfElement, validateHashtagAmount, 'Можно только 5 хэштегов!');
-pristine.addValidator(hashtagFielfElement, validateHashtagUniqueness, 'Хэштеги должны быть разными!');
-pristine.addValidator(descriptionFieldElement, validateTextfield, 'Должно содержать менее 140 символов!');
+function addFieldValidation () {
+  pristine.addValidator(hashtagFielfElement, validateHashtag, 'Должно начинаться с # и содержать менее 20 символов!');
+  pristine.addValidator(hashtagFielfElement, validateHashtagAmount, 'Можно только 5 хэштегов!');
+  pristine.addValidator(hashtagFielfElement, validateHashtagUniqueness, 'Хэштеги должны быть разными!');
+  pristine.addValidator(descriptionFieldElement, validateTextfield, 'Должно содержать менее 140 символов!');
+}
 
 function validateForm (evt) {
   evt.preventDefault();
@@ -76,4 +76,4 @@ function removeFormValidation () {
   formElement.removeEventListener('submit', closeDownloadImagePopup);
 }
 
-export {addFormValidation, removeFormValidation};
+export {addFormValidation, removeFormValidation, addFieldValidation};
