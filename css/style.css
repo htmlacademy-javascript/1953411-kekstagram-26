@@ -1408,3 +1408,22 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__field-wrapper {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.form__error {
+  position: relative;
+  bottom: 20px;
+
+  text-transform: none;
+  color: #ffe753;
+}
+
+.img-upload__field-wrapper:nth-child(2) .form__error {
+  bottom: 0;
+}
