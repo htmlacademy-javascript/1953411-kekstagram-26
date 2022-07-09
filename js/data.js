@@ -143,13 +143,13 @@ function createPhotoCard () {
     url: '',
     description: '',
     likes: getRandomPositiveInteger(LIKES_MIN_AMOUNT, LIKES_MAX_AMOUNT),
-    comment: '',
+    comments: '',
   };
 }
 
 function createSimilarPhotoCards (photoNumbersAmount)  {
   const photoCards = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
-  const comments = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
+  const createdComments = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
 
   createUniqueNumbersArray(photoNumbersAmount);
   cloneArray(photoNumbersAmount);
@@ -158,7 +158,7 @@ function createSimilarPhotoCards (photoNumbersAmount)  {
     photoCards[i].id = changedNumbers[i];
     photoCards[i].url = `photos/${changedNumbers[i]}.jpg`;
     photoCards[i].description = PHOTO_DESCRIPTIONS[changedNumbers[i]];
-    photoCards[i].comment = comments[i];
+    photoCards[i].comments = createdComments[i];
   }
 
   return photoCards;

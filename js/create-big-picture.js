@@ -1,8 +1,8 @@
 import {createNewElement} from './util.js';
 import {showBigPicturePopup} from './open-close-big-picture.js';
 
-const AVATAR_WIDTH = '35';
-const AVATAR_HEIGHT = '35';
+const AVATAR_WIDTH = 35;
+const AVATAR_HEIGHT = 35;
 const SHOW_COMMENTS_AMOUNT = 5;
 let commentsAmount = SHOW_COMMENTS_AMOUNT;
 
@@ -35,40 +35,38 @@ function createDomCommentButton () {
   return newButton;
 }
 
-function replaceComment (pictures, pictureIndex) {
+function replaceComment (picture) {
 
   commentsLoaderButtonElement = document.querySelector('.social__comments-loader');
 
-  function onLoadButtonClick () {
-    replaceComment(pictures, pictureIndex);
-  }
-
-  if (pictures[pictureIndex].comment.length < commentsAmount) {
-    commentsAmount = pictures[pictureIndex].comment.length;
+  if (picture.comments.length < commentsAmount) {
+    commentsAmount = picture.comments.length;
   }
 
   const commentsFragment = document.createDocumentFragment();
 
   socialCommentsElement.textContent = '';
 
-  pictures[pictureIndex].comment.slice(0, commentsAmount).forEach( (comment) => {
+  picture.comments.slice(0, commentsAmount).forEach( (comment) => {
     const newDomComment =  createDomComment(comment);
     commentsFragment.appendChild(newDomComment);
   });
 
   const commentsCountElement = document.querySelector('.social__comment-count');
 
-  commentsCountElement.textContent = `${commentsAmount} из ${pictures[pictureIndex].comment.length} комментариев`;
+  commentsCountElement.textContent = `${commentsAmount} из ${picture.comments.length} комментариев`;
 
   socialCommentsElement.appendChild(commentsFragment);
-  if (commentsAmount === pictures[pictureIndex].comment.length) {
+  if (commentsAmount === picture.comments.length) {
     commentsLoaderButtonElement.classList.add('hidden');
   } else {
     commentsLoaderButtonElement.classList.remove('hidden');
-    commentsLoaderButtonElement.addEventListener('click',onLoadButtonClick, {once: true});
+    commentsLoaderButtonElement.addEventListener('click',() => {
+      replaceComment(picture);
+    }, {once: true});
   }
 
-  commentsAmount+= SHOW_COMMENTS_AMOUNT;
+  commentsAmount += SHOW_COMMENTS_AMOUNT;
 }
 
 function openBigPicture (array) {
@@ -78,14 +76,14 @@ function openBigPicture (array) {
       evt.preventDefault();
       showBigPicturePopup();
 
-      const targetIndex = evt.target.parentElement.dataset.id;
+      const targetIndex = evt.target.parentElement.dataset.index;
 
-      replaceBigPictureData(array, targetIndex);
+      replaceBigPictureData(array[targetIndex]);
     }
   });
 }
 
-function replaceBigPictureData (pictures, index) {
+function replaceBigPictureData (picture) {
   const bigPictureElement = document.querySelector('.big-picture');
   const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
   const bigPictureImg = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
@@ -96,15 +94,15 @@ function replaceBigPictureData (pictures, index) {
 
   socialCommentsElement.insertAdjacentElement('afterend', createDomCommentButton());
 
-  replaceComment(pictures, index);
+  replaceComment(picture);
 
-  bigPictureImg.src = pictures[index].url;
+  bigPictureImg.src = picture.url;
 
-  bigPictureImg.alt = pictures[index].description;
+  bigPictureImg.alt = picture.description;
 
-  bigPictureSocial.querySelector('.likes-count').textContent = pictures[index].likes;
+  bigPictureSocial.querySelector('.likes-count').textContent = picture.likes;
 
-  bigPictureSocial.querySelector('.social__caption').textContent = pictures[index].description;
+  bigPictureSocial.querySelector('.social__caption').textContent = picture.description;
 }
 
 export {openBigPicture};

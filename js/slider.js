@@ -20,7 +20,7 @@ const HEAT_STEP = 0.1;
 
 
 const imageBackgroundElement = document.querySelector('.img-upload__preview');
-const imageElement = imageBackgroundElement.querySelector('img');
+const imageElement = imageBackgroundElement.querySelector('.img-upload__img');
 const sliderContainerElement = document.querySelector('.img-upload__effect-level');
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectValueElement = document.querySelector('.effect-level__value');
@@ -31,23 +31,25 @@ const marvinEffectElement = document.querySelector('#effect-marvin');
 const phobosEffectElement = document.querySelector('#effect-phobos');
 const heatEffectElement = document.querySelector('#effect-heat');
 
+function initSlider () {
+  noEffectElement.checked = true;
 
-let value = 1;
-noEffectElement.checked = true;
+  sliderContainerElement.classList.add('hidden');
 
-sliderContainerElement.classList.add('hidden');
-
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 1,
-  },
-  step: 0.1,
-  connect: 'lower',
-  start: 1,
-});
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: 0,
+      max: 1,
+    },
+    step: 0.1,
+    connect: 'lower',
+    start: 1,
+  });
+}
 
 function addSliderUpdater () {
+  let value = 1;
+
   sliderElement.noUiSlider.on('update', () => {
     const sliderValue = sliderElement.noUiSlider.get();
 
@@ -158,4 +160,4 @@ function removeChangingEffectEventListener () {
   heatEffectElement.removeEventListener('click', changeHeatEffect);
 }
 
-export {addChangingEffectEventListener, removeChangingEffectEventListener, addSliderUpdater};
+export {addChangingEffectEventListener, removeChangingEffectEventListener, addSliderUpdater, initSlider, removeEffects};

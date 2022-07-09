@@ -1,5 +1,3 @@
-
-
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
