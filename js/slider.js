@@ -1,8 +1,3 @@
-const downloadImagePopupElement = document.querySelector('.img-upload__overlay');
-downloadImagePopupElement.classList.remove('hidden');
-document.body.classList.add('modal-open');
-
-
 const CROME_MIN_VALUE = 0;
 const CROME_MAX_VALUE = 1;
 const CROME_STEP = 0.1;
@@ -52,41 +47,42 @@ noUiSlider.create(sliderElement, {
   start: 1,
 });
 
-sliderElement.noUiSlider.on('update', () => {
-  const sliderValue = sliderElement.noUiSlider.get();
+function addSliderUpdater () {
+  sliderElement.noUiSlider.on('update', () => {
+    const sliderValue = sliderElement.noUiSlider.get();
 
-  if (noEffectElement.checked) {
-    value = 0;
-  }
+    if (noEffectElement.checked) {
+      value = 0;
+    }
 
-  if (cromeEffectElement.checked) {
-    value = sliderValue;
-    imageElement.style.filter = `grayscale(${value})`;
-  }
+    if (cromeEffectElement.checked) {
+      value = sliderValue;
+      imageElement.style.filter = `grayscale(${value})`;
+    }
 
-  if (sepiaEffectElement.checked) {
-    value = sliderValue;
-    imageElement.style.filter = `sepia(${value})`;
-  }
+    if (sepiaEffectElement.checked) {
+      value = sliderValue;
+      imageElement.style.filter = `sepia(${value})`;
+    }
 
-  if (marvinEffectElement.checked) {
-    value = sliderValue;
-    imageElement.style.filter = `invert(${value}%)`;
-  }
+    if (marvinEffectElement.checked) {
+      value = sliderValue;
+      imageElement.style.filter = `invert(${value}%)`;
+    }
 
-  if (phobosEffectElement.checked) {
-    value = sliderValue;
-    imageElement.style.filter = `blur(${value}px)`;
-  }
+    if (phobosEffectElement.checked) {
+      value = sliderValue;
+      imageElement.style.filter = `blur(${value}px)`;
+    }
 
-  if (heatEffectElement.checked) {
-    value = sliderValue;
-    imageElement.style.filter = `brightness(${value})`;
-  }
+    if (heatEffectElement.checked) {
+      value = sliderValue;
+      imageElement.style.filter = `brightness(${value})`;
+    }
 
-  effectValueElement.value = value;
-  console.log(effectValueElement.value);
-});
+    effectValueElement.value = value;
+  });
+}
 
 function removeEffects () {
   imageElement.style.filter = '';
@@ -153,4 +149,13 @@ function addChangingEffectEventListener () {
   heatEffectElement.addEventListener('click', changeHeatEffect);
 }
 
-addChangingEffectEventListener();
+function removeChangingEffectEventListener () {
+  noEffectElement.removeEventListener('click', removeEffects);
+  cromeEffectElement.removeEventListener('click', changeCromeEffect);
+  sepiaEffectElement.removeEventListener('click', changeSepiaEffect);
+  marvinEffectElement.removeEventListener('click', changeMarvinEffect);
+  phobosEffectElement.removeEventListener('click', changePhobosEffect);
+  heatEffectElement.removeEventListener('click', changeHeatEffect);
+}
+
+export {addChangingEffectEventListener, removeChangingEffectEventListener, addSliderUpdater};
