@@ -13,6 +13,10 @@ const onPopupEscapeKeydown = (evt) => {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
+
+  if (evt.key === 'Escape'  && hashtagFieldElement === document.activeElement || evt.key === 'Escape' && descriptionFieldElement === document.activeElement) {
+    evt.target.blur();
+  }
 };
 
 function addUploadPopupEventListener () {
