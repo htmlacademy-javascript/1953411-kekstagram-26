@@ -1,4 +1,3 @@
-import {addFormValidation, removeFormValidation} from './form-validation.js';
 import {setDefaultPhotoSize, addResizingButtonEventListener,removeResizingButtonEventListener} from './scale-photo.js';
 import {addChangingEffectEventListener, removeChangingEffectEventListener, removeEffects} from './slider.js';
 
@@ -19,6 +18,7 @@ const onPopupEscapeKeydown = (evt) => {
 function addUploadPopupEventListener () {
   imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
 }
+
 function removeUploadPopupEventListener () {
   imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
 }
@@ -30,7 +30,6 @@ function openDownloadImagePopup () {
   downloadImageCloseButtonElement.addEventListener('click', closeDownloadImagePopup);
   document.addEventListener('keydown', onPopupEscapeKeydown);
   removeUploadPopupEventListener();
-  addFormValidation();
   addResizingButtonEventListener();
   addChangingEffectEventListener();
 }
@@ -46,7 +45,6 @@ function closeDownloadImagePopup () {
   downloadImageCloseButtonElement.removeEventListener('click', closeDownloadImagePopup);
   document.removeEventListener('keydown', onPopupEscapeKeydown);
   addUploadPopupEventListener();
-  removeFormValidation();
   setDefaultPhotoSize();
   removeResizingButtonEventListener();
   removeChangingEffectEventListener();

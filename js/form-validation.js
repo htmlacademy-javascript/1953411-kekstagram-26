@@ -1,5 +1,6 @@
 import {checkStringLength} from './util.js';
-import {closeDownloadImagePopup} from './open-close-download-image-popup.js';
+import {sendData} from './network.js';
+import {showApprove, showError} from './success-error.js';
 
 const MAX_TEXT_LENGTH = 139;
 const MAX_HASHTAG_AMOUNT = 5;
@@ -7,6 +8,7 @@ const MAX_HASHTAG_AMOUNT = 5;
 const formElement = document.querySelector('.img-upload__form');
 const hashtagFielfElement = document.querySelector('.text__hashtags');
 const descriptionFieldElement = document.querySelector('.text__description');
+const submitButtonElement = formElement.querySelector('#upload-submit');
 
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 
@@ -61,19 +63,38 @@ function addFieldValidation () {
   pristine.addValidator(descriptionFieldElement, validateTextfield, 'Должно содержать менее 140 символов!');
 }
 
-function validateForm (evt) {
-  evt.preventDefault();
-  pristine.validate();
+function addBlockButton () {
+  submitButtonElement.disabled = true;
+  submitButtonElement.textContent = 'публикую...';
 }
 
-function addFormValidation () {
-  formElement.addEventListener('submit', validateForm);
-  formElement.addEventListener('submit', closeDownloadImagePopup);
+function removeBlockButton () {
+  submitButtonElement.disabled = false;
+  submitButtonElement.textContent = 'опубликовать';
 }
 
-function removeFormValidation () {
-  formElement.removeEventListener('submit', validateForm);
-  formElement.removeEventListener('submit', closeDownloadImagePopup);
+function addFormValidation (onSuccess) {
+  formElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      addBlockButton();
+
+      sendData(
+        () => {
+          removeBlockButton();
+          onSuccess();
+          showApprove();
+        },
+        () => {
+          removeBlockButton();
+          showError();
+        },
+        new FormData(evt.target)
+      );
+    }
+  });
 }
 
-export {addFormValidation, removeFormValidation, addFieldValidation};
+export {addFormValidation, addFieldValidation};

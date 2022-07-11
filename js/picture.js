@@ -15,12 +15,9 @@ const createPhotos = (pictures) => {
       newPicture.dataset.index = counter++;
     }
   );
-  return photosFragment;
+
+  const picturesContainerElement = document.querySelector('.pictures');
+  picturesContainerElement.appendChild(photosFragment);
 };
 
-function renderPhotos (pictures) {
-  const picturesContainerElement = document.querySelector('.pictures');
-  picturesContainerElement.appendChild(pictures);
-}
-
-export {createPhotos, renderPhotos};
+export {createPhotos};
