@@ -4,25 +4,20 @@ const createPhotos = (pictures) => {
 
   let counter = 0;
   pictures.forEach(
-    ({url, likes, comment}) => {
+    ({url, likes, comments}) => {
       const newPicture = pictureTemplateElement.cloneNode(true);
 
       newPicture.querySelector('.picture__img').src = url;
       newPicture.querySelector('.picture__likes').textContent = likes;
-      newPicture.querySelector('.picture__comments').textContent = comment.length;
+      newPicture.querySelector('.picture__comments').textContent = comments.length;
       photosFragment.appendChild(newPicture);
 
-      newPicture.dataset.id = counter;
-
-      counter++;
+      newPicture.dataset.index = counter++;
     }
   );
-  return photosFragment;
+
+  const picturesContainerElement = document.querySelector('.pictures');
+  picturesContainerElement.appendChild(photosFragment);
 };
 
-function renderPhotos (pictures) {
-  const picturesContainerElement = document.querySelector('.pictures');
-  picturesContainerElement.appendChild(pictures);
-}
-
-export {createPhotos, renderPhotos};
+export {createPhotos};

@@ -1,5 +1,5 @@
-import {addFormValidation, removeFormValidation} from './form-validation.js';
-import {addChangingEffectEventListener, removeChangingEffectEventListener} from './slider.js';
+import {setDefaultPhotoSize, addResizingButtonEventListener,removeResizingButtonEventListener} from './scale-photo.js';
+import {addChangingEffectEventListener, removeChangingEffectEventListener, removeEffects} from './slider.js';
 
 const imageUploadInputElement = document.querySelector('.img-upload__input');
 const downloadImagePopupElement = document.querySelector('.img-upload__overlay');
@@ -13,11 +13,16 @@ const onPopupEscapeKeydown = (evt) => {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
+
+  if (evt.key === 'Escape'  && hashtagFieldElement === document.activeElement || evt.key === 'Escape' && descriptionFieldElement === document.activeElement) {
+    evt.target.blur();
+  }
 };
 
 function addUploadPopupEventListener () {
   imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
 }
+
 function removeUploadPopupEventListener () {
   imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
 }
@@ -26,24 +31,33 @@ function openDownloadImagePopup () {
   downloadImagePopupElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  addChangingEffectEventListener();
   downloadImageCloseButtonElement.addEventListener('click', closeDownloadImagePopup);
   document.addEventListener('keydown', onPopupEscapeKeydown);
   removeUploadPopupEventListener();
-  addFormValidation();
+  addResizingButtonEventListener();
+  addChangingEffectEventListener();
 }
 
 function closeDownloadImagePopup () {
+  const noEffectElement = document.querySelector('#effect-none');
+  const hashtagFielfElement = document.querySelector('.text__hashtags');
+  const descriptionFieldElement = document.querySelector('.text__description');
+
   downloadImagePopupElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
-  removeChangingEffectEventListener();
   downloadImageCloseButtonElement.removeEventListener('click', closeDownloadImagePopup);
   document.removeEventListener('keydown', onPopupEscapeKeydown);
   addUploadPopupEventListener();
-  removeFormValidation();
+  setDefaultPhotoSize();
+  removeResizingButtonEventListener();
+  removeChangingEffectEventListener();
 
+  noEffectElement.checked = true;
+  removeEffects();
   imageUploadInputElement.value = '';
+  hashtagFielfElement.value = '';
+  descriptionFieldElement.value = '';
 }
 
 export {closeDownloadImagePopup, addUploadPopupEventListener};
