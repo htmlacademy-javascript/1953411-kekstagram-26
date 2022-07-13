@@ -1,10 +1,9 @@
-import {createUniqueArray} from './util.js';
+import {createUniqueArray, debounce} from './util.js';
 import {createPhotos} from './picture.js';
 import {openBigPicture} from './create-big-picture.js';
 
 const filterContainerElement = document.querySelector('.img-filters');
 const filterFormElement = filterContainerElement.querySelector('.img-filters__form');
-const picturesContainerElement = document.querySelector('.pictures');
 
 function toggleActiveFilter (target) {
   const filterButtonElements = filterFormElement.querySelectorAll('.img-filters__button');
@@ -16,27 +15,14 @@ function toggleActiveFilter (target) {
   target.classList.add('img-filters__button--active');
 }
 
-function addFilterToggleEventListener (photos) {
+function addFilterToggleEventListener () {
   filterContainerElement.addEventListener('click', (evt) => {
     evt.preventDefault();
 
     if (evt.target.matches('.img-filters__button') && !evt.target.matches('.img-filters__button--active')) {
       toggleActiveFilter(evt.target);
-
-      const picturesElements = document.querySelectorAll('.picture');
-      picturesElements.forEach((element) => {
-        picturesContainerElement.removeChild(element);
-      });
-      const filteredPhotos = filterPhotos(photos);
-      createPhotos(filteredPhotos);
-      openBigPicture(filteredPhotos);
-      return filteredPhotos;
     }
   });
-
-  createPhotos(filterPhotos(photos));
-  openBigPicture(filterPhotos(photos));
-  return filterPhotos(photos);
 }
 
 function filterPhotos (photos) {
@@ -63,4 +49,25 @@ function filterPhotos (photos) {
   }
 }
 
-export {addFilterToggleEventListener};
+function addChangeFilterEventListener (photos) {
+  filterContainerElement.addEventListener('click', debounce((evt) => {
+    evt.preventDefault();
+
+    if (evt.target.matches('.img-filters__button') && !evt.target.matches('.img-filters__button--active')) {
+      const filteredPhotos = filterPhotos(photos);
+
+      const picturesContainerElement = document.querySelector('.pictures');
+      const picturesElements = document.querySelectorAll('.picture');
+      picturesElements.forEach((element) => {
+        picturesContainerElement.removeChild(element);
+      });
+
+      createPhotos(filteredPhotos);
+      openBigPicture(filteredPhotos);
+    }
+  }));
+  createPhotos(photos);
+  openBigPicture(photos);
+}
+
+export {addFilterToggleEventListener, addChangeFilterEventListener};

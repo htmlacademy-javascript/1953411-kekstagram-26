@@ -6,19 +6,19 @@ import {addUploadPopupEventListener,closeDownloadImagePopup} from './open-close-
 import {addFieldValidation, addFormValidation} from'./form-validation.js';
 import {setDefaultPhotoSize} from './scale-photo.js';
 import {addSliderUpdater, initSlider} from './slider.js';
-import {addFilterToggleEventListener} from './filter.js';
-
-const filterContainerElement = document.querySelector('.img-filters');
+import {addFilterToggleEventListener, addChangeFilterEventListener} from './filter.js';
 
 getData( (photos) => {
   addFilterToggleEventListener(photos);
+  addChangeFilterEventListener(photos);
 });
 
+const filterContainerElement = document.querySelector('.img-filters');
 filterContainerElement.classList.remove('img-filters--inactive');
 
 addUploadPopupEventListener();
 addFieldValidation();
-addFormValidation(closeDownloadImagePopup);
+addFormValidation(closeDownloadImagePopup, closeDownloadImagePopup);
 
 setDefaultPhotoSize();
 initSlider();
