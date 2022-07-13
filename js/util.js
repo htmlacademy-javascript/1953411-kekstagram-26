@@ -22,6 +22,22 @@ const createNewElement = (tagName, className, textContent) => {
   return newTag;
 };
 
+function createUniqueArray (array) {
+
+  let i = array.length;
+  let j = 0;
+  let swap;
+
+  while (i--) {
+    j = getRandomPositiveInteger(0, i);
+    swap = array[i];
+    array[i] = array[j];
+    array[j] = swap;
+  }
+
+  return array;
+}
+
 function debounce (callback, timeoutDelay = 500) {
 
   let timeoutId;
@@ -47,4 +63,4 @@ function throttle (callback, delayBetweenFrames) {
   };
 }
 
-export {checkStringLength, getRandomPositiveInteger, createNewElement, debounce, throttle};
+export {checkStringLength, getRandomPositiveInteger, createNewElement, createUniqueArray, debounce, throttle};
