@@ -1,9 +1,13 @@
 import {setDefaultPhotoSize, addResizingButtonEventListener,removeResizingButtonEventListener} from './scale-photo.js';
 import {addChangingEffectEventListener, removeChangingEffectEventListener, removeEffects} from './slider.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const imageUploadInputElement = document.querySelector('.img-upload__input');
 const downloadImagePopupElement = document.querySelector('.img-upload__overlay');
 const downloadImageCloseButtonElement =  document.querySelector('.img-upload__cancel');
+const imageElement = downloadImagePopupElement.querySelector('.img-upload__img');
+const effectsPreviewElements = downloadImagePopupElement.querySelectorAll('.effects__preview');
 
 const onPopupEscapeKeydown = (evt) => {
   const hashtagFieldElement = document.querySelector('.text__hashtags');
@@ -28,8 +32,20 @@ function removeUploadPopupEventListener () {
 }
 
 function openDownloadImagePopup () {
+  const file = imageUploadInputElement.files[0];
+  const fileName = file.name.toLowerCase();
+
+  if (FILE_TYPES.some((name) =>  fileName.endsWith(name))) {
+    imageElement.src = URL.createObjectURL(file);
+    effectsPreviewElements.forEach((element)=> {
+      element.style.backgroundImage = `url(${URL.createObjectURL(file)})` ;
+    });
+  }
+
   downloadImagePopupElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
+
+  setDefaultPhotoSize();
 
   downloadImageCloseButtonElement.addEventListener('click', closeDownloadImagePopup);
   document.addEventListener('keydown', onPopupEscapeKeydown);
