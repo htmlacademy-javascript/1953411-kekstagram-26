@@ -2,6 +2,8 @@ import {createUniqueArray, debounce} from './util.js';
 import {createPhotos} from './picture.js';
 import {openBigPicture} from './create-big-picture.js';
 
+const RANDOM_PHOTOS_AMOUNT = 10;
+
 const filterContainerElement = document.querySelector('.img-filters');
 const filterFormElement = filterContainerElement.querySelector('.img-filters__form');
 
@@ -10,16 +12,18 @@ function toggleActiveFilter (target) {
 
   filterButtonElements.forEach((button) => {
     button.classList.remove('img-filters__button--active');
+    button.disabled = false;
   });
 
   target.classList.add('img-filters__button--active');
+  target.disabled = true;
 }
 
 function addFilterToggleEventListener () {
   filterContainerElement.addEventListener('click', (evt) => {
     evt.preventDefault();
 
-    if (evt.target.matches('.img-filters__button') && !evt.target.matches('.img-filters__button--active')) {
+    if (evt.target.matches('.img-filters__button') && !evt.target.matches('.img-filters__button--active') ) {
       toggleActiveFilter(evt.target);
     }
   });
@@ -35,7 +39,7 @@ function filterPhotos (photos) {
   }
 
   if (randomFilterButtoElement.classList.contains('img-filters__button--active')) {
-    const slicedPhotos = photos.slice();
+    const slicedPhotos = photos.slice(0, RANDOM_PHOTOS_AMOUNT);
     const randomPhotos = createUniqueArray(slicedPhotos);
     return randomPhotos;
   }
@@ -53,7 +57,7 @@ function addChangeFilterEventListener (photos) {
   filterContainerElement.addEventListener('click', debounce((evt) => {
     evt.preventDefault();
 
-    if (evt.target.matches('.img-filters__button') && !evt.target.matches('.img-filters__button--active')) {
+    if (evt.target.matches('.img-filters__button')) {
       const filteredPhotos = filterPhotos(photos);
 
       const picturesContainerElement = document.querySelector('.pictures');
