@@ -12,7 +12,7 @@ let value = MAX_VALUE;
 function setDefaultPhotoSize () {
   value = MAX_VALUE;
   controlValueElement.value = `${value}%`;
-  imageElement.style.transform = '';
+  imageElement.style.transform = `scale(${value / 100})`;
 }
 
 function increaseControlValue () {
