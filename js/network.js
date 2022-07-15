@@ -1,9 +1,11 @@
+const API_URL = 'https://26.javascript.pages.academy/kekstagram';
+
 function getData (onSuccess) {
-  fetch('https://26.javascript.pages.academy/kekstagram/data').then((response) => response.json()).then((photos)=> onSuccess(photos));
+  fetch(`${API_URL}/data`).then((response) => response.json()).then((photos)=> onSuccess(photos));
 }
 
 function sendData (onSuccess, onFail, body) {
-  fetch('https://26.javascript.pages.academ/kekstagram',
+  fetch(API_URL,
     {
       method: 'POST',
       body,

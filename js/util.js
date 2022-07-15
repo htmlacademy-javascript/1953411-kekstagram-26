@@ -22,20 +22,20 @@ const createNewElement = (tagName, className, textContent) => {
   return newTag;
 };
 
-function createUniqueArray (array) {
+function shuffleArray (data) {
 
-  let i = array.length;
+  let i = data.length;
   let j = 0;
   let swap;
 
   while (i--) {
     j = getRandomPositiveInteger(0, i);
-    swap = array[i];
-    array[i] = array[j];
-    array[j] = swap;
+    swap = data[i];
+    data[i] = data[j];
+    data[j] = swap;
   }
 
-  return array;
+  return data;
 }
 
 function debounce (callback, timeoutDelay = 500) {
@@ -49,18 +49,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-function throttle (callback, delayBetweenFrames) {
-
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {checkStringLength, getRandomPositiveInteger, createNewElement, createUniqueArray, debounce, throttle};
+export {checkStringLength, getRandomPositiveInteger, createNewElement, shuffleArray, debounce};

@@ -1,4 +1,4 @@
-import {createUniqueArray, debounce} from './util.js';
+import {shuffleArray, debounce} from './util.js';
 import {createPhotos} from './picture.js';
 import {openBigPicture} from './create-big-picture.js';
 
@@ -40,7 +40,7 @@ function filterPhotos (photos) {
 
   if (randomFilterButtoElement.classList.contains('img-filters__button--active')) {
     const slicedPhotos = photos.slice(0, RANDOM_PHOTOS_AMOUNT);
-    const randomPhotos = createUniqueArray(slicedPhotos);
+    const randomPhotos = shuffleArray(slicedPhotos);
     return randomPhotos;
   }
 

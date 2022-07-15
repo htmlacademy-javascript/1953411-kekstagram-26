@@ -1,8 +1,8 @@
 import {checkStringLength} from './util.js';
 import {sendData} from './network.js';
-import {showApprove, showError} from './success-error.js';
+import {showApprove, showError} from './messages.js';
 
-const MAX_TEXT_LENGTH = 139;
+const MAX_TEXT_LENGTH = 140;
 const MAX_HASHTAG_AMOUNT = 5;
 
 const formElement = document.querySelector('.img-upload__form');

@@ -7,6 +7,7 @@ import {addFieldValidation, addFormValidation} from'./form-validation.js';
 import {setDefaultPhotoSize} from './scale-photo.js';
 import {addSliderUpdater, initSlider} from './slider.js';
 import {addFilterToggleEventListener, addChangeFilterEventListener} from './filter.js';
+import './messages.js';
 
 getData( (photos) => {
   addFilterToggleEventListener(photos);
