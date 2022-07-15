@@ -24,7 +24,7 @@ const pristine = new Pristine(formElement, {
 let hashtagValue = hashtagFielfElement.value;
 let hashtagWords = hashtagValue.split(' ');
 
-function validateHashtag () {
+const validateHashtag = () => {
   hashtagValue = hashtagFielfElement.value.trim();
   const hashtagValues = hashtagValue.split(' ');
   hashtagWords = hashtagValues.filter((word) =>  word !== '');
@@ -35,13 +35,11 @@ function validateHashtag () {
     }
   }
   return true;
-}
+};
 
-function validateHashtagAmount () {
-  return checkStringLength(hashtagWords, MAX_HASHTAG_AMOUNT);
-}
+const validateHashtagAmount = () =>  checkStringLength(hashtagWords, MAX_HASHTAG_AMOUNT);
 
-function validateHashtagUniqueness () {
+const validateHashtagUniqueness = () => {
   for (let i = 0; i < hashtagWords.length; i++) {
     for (let j = i + 1; j < hashtagWords.length; j++) {
       if (hashtagWords[i].toUpperCase() === hashtagWords[j].toUpperCase()) {
@@ -50,30 +48,28 @@ function validateHashtagUniqueness () {
     }
   }
   return true;
-}
+};
 
-function validateTextfield () {
-  return checkStringLength(descriptionFieldElement.value, MAX_TEXT_LENGTH);
-}
+const validateTextfield = () => checkStringLength(descriptionFieldElement.value, MAX_TEXT_LENGTH);
 
-function addFieldValidation () {
+const addFieldValidation = () => {
   pristine.addValidator(hashtagFielfElement, validateHashtag, 'Должно начинаться с # и содержать менее 20 символов!');
   pristine.addValidator(hashtagFielfElement, validateHashtagAmount, 'Можно только 5 хэштегов!');
   pristine.addValidator(hashtagFielfElement, validateHashtagUniqueness, 'Хэштеги должны быть разными!');
   pristine.addValidator(descriptionFieldElement, validateTextfield, 'Должно содержать менее 140 символов!');
-}
+};
 
-function addBlockButton () {
+const addBlockButton = () => {
   submitButtonElement.disabled = true;
   submitButtonElement.textContent = 'публикую...';
-}
+};
 
-function removeBlockButton () {
+const removeBlockButton = () => {
   submitButtonElement.disabled = false;
   submitButtonElement.textContent = 'опубликовать';
-}
+};
 
-function addFormValidation (onSuccess) {
+const addFormValidation = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     const isValid = pristine.validate();
@@ -95,6 +91,6 @@ function addFormValidation (onSuccess) {
       );
     }
   });
-}
+};
 
 export {addFormValidation, addFieldValidation};

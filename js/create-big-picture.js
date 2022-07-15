@@ -26,16 +26,16 @@ const createDomComment = (element) => {
   return newComment;
 };
 
-function createDomCommentButton () {
+const createDomCommentButton = () => {
   const newButton = createNewElement('button', 'social__comments-loader', 'Загрузить еще');
 
   newButton.type = 'button';
   newButton.classList.add('comments-loader');
 
   return newButton;
-}
+};
 
-function replaceComment (picture) {
+const replaceComment = (picture) => {
 
   commentsLoaderButtonElement = document.querySelector('.social__comments-loader');
 
@@ -67,23 +67,9 @@ function replaceComment (picture) {
   }
 
   commentsAmount += SHOW_COMMENTS_AMOUNT;
-}
+};
 
-function openBigPicture (array) {
-  const pictureContainerElement = document.querySelector('.pictures');
-  pictureContainerElement.addEventListener('click', (evt) => {
-    if (evt.target.matches('img')) {
-      evt.preventDefault();
-      showBigPicturePopup();
-
-      const targetIndex = evt.target.parentElement.dataset.index;
-
-      replaceBigPictureData(array[targetIndex]);
-    }
-  });
-}
-
-function replaceBigPictureData (picture) {
+const replaceBigPictureData = (picture) => {
   const bigPictureElement = document.querySelector('.big-picture');
   const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
   const bigPictureImg = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
@@ -103,6 +89,20 @@ function replaceBigPictureData (picture) {
   bigPictureSocial.querySelector('.likes-count').textContent = picture.likes;
 
   bigPictureSocial.querySelector('.social__caption').textContent = picture.description;
-}
+};
+
+const openBigPicture = (data) => {
+  const pictureContainerElement = document.querySelector('.pictures');
+  pictureContainerElement.addEventListener('click', (evt) => {
+    if (evt.target.matches('img')) {
+      evt.preventDefault();
+      showBigPicturePopup();
+
+      const targetIndex = evt.target.parentElement.dataset.index;
+
+      replaceBigPictureData(data[targetIndex]);
+    }
+  });
+};
 
 export {openBigPicture};

@@ -81,19 +81,17 @@ const PHOTO_DESCRIPTIONS = [
 const numbers = [];
 let changedNumbers = [];
 
-function createRandomArrayElement (elements) {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-}
+const createRandomArrayElement = (elements) =>  elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-function createNumbersArray (numbersAmount) {
+const createNumbersArray = (numbersAmount) => {
   for (let i = 0; i < numbersAmount; i ++ ) {
     numbers[i] = i +1;
   }
 
   return numbers;
-}
+};
 
-function createUniqueNumbersArray (numbersAmount) {
+const createUniqueNumbersArray = (numbersAmount) => {
   createNumbersArray(numbersAmount);
 
   let i = numbersAmount;
@@ -108,12 +106,12 @@ function createUniqueNumbersArray (numbersAmount) {
   }
 
   return numbers;
-}
+};
 
-function cloneArray (arrayLength) {
+const cloneArray = (arrayLength) => {
   changedNumbers = numbers.slice(0, arrayLength);
   return changedNumbers;
-}
+};
 
 function createComment () {
   return {
@@ -124,7 +122,7 @@ function createComment () {
   };
 }
 
-function createDifferentComments ()  {
+const createDifferentComments = () =>  {
   const differentComments = Array.from({length: getRandomPositiveInteger(COMMENTS_MIN_AMOUNT, COMMENTS_MAX_AMOUNT)}, createComment);
   createUniqueNumbersArray(COMMENTS_MAX_ID);
   cloneArray(COMMENTS_MAX_ID);
@@ -135,7 +133,7 @@ function createDifferentComments ()  {
   }
 
   return differentComments;
-}
+};
 
 function createPhotoCard () {
   return {
@@ -147,7 +145,7 @@ function createPhotoCard () {
   };
 }
 
-function createSimilarPhotoCards (photoNumbersAmount)  {
+const createSimilarPhotoCards = (photoNumbersAmount) => {
   const photoCards = Array.from({length: OBJECTS_AMOUNT}, createPhotoCard);
   const createdComments = Array.from({length: OBJECTS_AMOUNT}, createDifferentComments);
 
@@ -162,6 +160,6 @@ function createSimilarPhotoCards (photoNumbersAmount)  {
   }
 
   return photoCards;
-}
+};
 
 export {createSimilarPhotoCards};

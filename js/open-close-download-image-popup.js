@@ -23,15 +23,7 @@ const onPopupEscapeKeydown = (evt) => {
   }
 };
 
-function addUploadPopupEventListener () {
-  imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
-}
-
-function removeUploadPopupEventListener () {
-  imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
-}
-
-function openDownloadImagePopup () {
+const openDownloadImagePopup = () => {
   const file = imageUploadInputElement.files[0];
   const fileName = file.name.toLowerCase();
 
@@ -52,6 +44,14 @@ function openDownloadImagePopup () {
   removeUploadPopupEventListener();
   addResizingButtonEventListener();
   addChangingEffectEventListener();
+};
+
+const addUploadPopupEventListener = () => {
+  imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
+};
+
+function removeUploadPopupEventListener () {
+  imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
 }
 
 function closeDownloadImagePopup () {

@@ -4,19 +4,12 @@ const newSuccessMessage = successTemplate.cloneNode(true);
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const newErrorMessage = errorTemplate.cloneNode(true);
 
-function onSuccessEscapeKyedown (evt) {
+const onSuccessEscapeKyedown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     closeSuccessPopup();
   }
-}
-
-function onErrorEscapeKyedown (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closeErrorPopup();
-  }
-}
+};
 
 function closeSuccessPopup () {
   document.removeEventListener('keydown', onSuccessEscapeKyedown);
@@ -24,13 +17,7 @@ function closeSuccessPopup () {
   document.removeEventListener('click', closeSuccessPopup);
 }
 
-function closeErrorPopup () {
-  document.removeEventListener('keydown', onErrorEscapeKyedown);
-  document.body.removeChild(newErrorMessage);
-  document.removeEventListener('click', closeErrorPopup);
-}
-
-function showApprove () {
+const showApprove = () =>  {
   document.body.appendChild(newSuccessMessage);
 
   const successButtonElement = document.querySelector('.success__button');
@@ -40,9 +27,22 @@ function showApprove () {
   successButtonElement.addEventListener('click', closeSuccessPopup);
 
   document.addEventListener('click', closeSuccessPopup);
+};
+
+const onErrorEscapeKyedown = (evt) => {
+  if (evt.key === 'Escape') {
+    evt.preventDefault();
+    closeErrorPopup();
+  }
+};
+
+function closeErrorPopup () {
+  document.removeEventListener('keydown', onErrorEscapeKyedown);
+  document.body.removeChild(newErrorMessage);
+  document.removeEventListener('click', closeErrorPopup);
 }
 
-function showError () {
+const showError = () => {
   newErrorMessage.style.zIndex = '100';
   document.body.appendChild(newErrorMessage);
 
@@ -53,6 +53,6 @@ function showError () {
   successButtonElement.addEventListener('click', closeErrorPopup);
 
   document.addEventListener('click', closeErrorPopup);
-}
+};
 
 export {showApprove, showError};

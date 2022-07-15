@@ -7,7 +7,7 @@ const RANDOM_PHOTOS_AMOUNT = 10;
 const filterContainerElement = document.querySelector('.img-filters');
 const filterFormElement = filterContainerElement.querySelector('.img-filters__form');
 
-function toggleActiveFilter (target) {
+const toggleActiveFilter = (target) => {
   const filterButtonElements = filterFormElement.querySelectorAll('.img-filters__button');
 
   filterButtonElements.forEach((button) => {
@@ -17,9 +17,9 @@ function toggleActiveFilter (target) {
 
   target.classList.add('img-filters__button--active');
   target.disabled = true;
-}
+};
 
-function addFilterToggleEventListener () {
+const addFilterToggleEventListener = () => {
   filterContainerElement.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -27,9 +27,9 @@ function addFilterToggleEventListener () {
       toggleActiveFilter(evt.target);
     }
   });
-}
+};
 
-function filterPhotos (photos) {
+const filterPhotos = (photos) => {
   const defaulFilterButtonElment =filterFormElement.querySelector('#filter-default');
   const randomFilterButtoElement =filterFormElement.querySelector('#filter-random');
   const discussedFilterButtonElement =filterFormElement.querySelector('#filter-discussed');
@@ -51,9 +51,9 @@ function filterPhotos (photos) {
 
     return sortedPhotos;
   }
-}
+};
 
-function addChangeFilterEventListener (photos) {
+const addChangeFilterEventListener = (photos) => {
   filterContainerElement.addEventListener('click', debounce((evt) => {
     evt.preventDefault();
 
@@ -72,6 +72,6 @@ function addChangeFilterEventListener (photos) {
   }));
   createPhotos(photos);
   openBigPicture(photos);
-}
+};
 
 export {addFilterToggleEventListener, addChangeFilterEventListener};

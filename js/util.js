@@ -1,15 +1,13 @@
-function getRandomPositiveInteger (a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
 
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
-function checkStringLength (string, length) {
-  return string.length <= length;
-}
+const checkStringLength = (string, length) => string.length <= length;
 
 const createNewElement = (tagName, className, textContent) => {
   const newTag = document.createElement(tagName);
@@ -22,7 +20,7 @@ const createNewElement = (tagName, className, textContent) => {
   return newTag;
 };
 
-function shuffleArray (data) {
+const shuffleArray = (data) => {
 
   let i = data.length;
   let j = 0;
@@ -36,9 +34,9 @@ function shuffleArray (data) {
   }
 
   return data;
-}
+};
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
 
   let timeoutId;
 
@@ -47,6 +45,6 @@ function debounce (callback, timeoutDelay = 500) {
 
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 export {checkStringLength, getRandomPositiveInteger, createNewElement, shuffleArray, debounce};

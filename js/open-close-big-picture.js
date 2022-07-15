@@ -1,20 +1,20 @@
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
-function onBigPictureEscapeKyedown (evt) {
+const onBigPictureEscapeKyedown = (evt) => {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     hideBigPicturePopup();
   }
-}
+};
 
-function showBigPicturePopup () {
+const showBigPicturePopup = () => {
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onBigPictureEscapeKyedown);
   closeButtonElement.addEventListener('click', hideBigPicturePopup);
-}
+};
 
 function hideBigPicturePopup () {
   bigPictureElement.classList.add('hidden');
