@@ -71,24 +71,24 @@ const replaceComment = (picture) => {
 
 const replaceBigPictureData = (picture) => {
   const bigPictureElement = document.querySelector('.big-picture');
-  const bigPictureSocial = bigPictureElement.querySelector('.big-picture__social');
-  const bigPictureImg = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
+  const bigPictureSocialElement = bigPictureElement.querySelector('.big-picture__social');
+  const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
 
   commentsAmount = SHOW_COMMENTS_AMOUNT;
 
-  bigPictureSocial.removeChild(commentsLoaderButtonElement);
+  bigPictureSocialElement.removeChild(commentsLoaderButtonElement);
 
   socialCommentsElement.insertAdjacentElement('afterend', createDomCommentButton());
 
   replaceComment(picture);
 
-  bigPictureImg.src = picture.url;
+  bigPictureImgElement.src = picture.url;
 
-  bigPictureImg.alt = picture.description;
+  bigPictureImgElement.alt = picture.description;
 
-  bigPictureSocial.querySelector('.likes-count').textContent = picture.likes;
+  bigPictureSocialElement.querySelector('.likes-count').textContent = picture.likes;
 
-  bigPictureSocial.querySelector('.social__caption').textContent = picture.description;
+  bigPictureSocialElement.querySelector('.social__caption').textContent = picture.description;
 };
 
 const openBigPicture = (data) => {

@@ -142,7 +142,7 @@ const changeHeatEffect = () => {
   updateSlider(HEAT_MIN_VALUE, HEAT_MAX_VALUE, HEAT_STEP);
 };
 
-const addChangingEffectEventListener = () => {
+const onEffectChange = () => {
   noEffectElement.addEventListener('click', removeEffects);
   cromeEffectElement.addEventListener('click', changeCromeEffect);
   sepiaEffectElement.addEventListener('click', changeSepiaEffect);
@@ -151,7 +151,7 @@ const addChangingEffectEventListener = () => {
   heatEffectElement.addEventListener('click', changeHeatEffect);
 };
 
-const removeChangingEffectEventListener = () => {
+const onPhotoClose = () => {
   noEffectElement.removeEventListener('click', removeEffects);
   cromeEffectElement.removeEventListener('click', changeCromeEffect);
   sepiaEffectElement.removeEventListener('click', changeSepiaEffect);
@@ -160,4 +160,4 @@ const removeChangingEffectEventListener = () => {
   heatEffectElement.removeEventListener('click', changeHeatEffect);
 };
 
-export {addChangingEffectEventListener, removeChangingEffectEventListener, addSliderUpdater, initSlider, removeEffects};
+export {onEffectChange, onPhotoClose, addSliderUpdater, initSlider, removeEffects};

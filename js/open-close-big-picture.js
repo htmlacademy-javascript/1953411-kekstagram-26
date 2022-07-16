@@ -1,8 +1,10 @@
+import {isEscPressed} from './util.js';
+
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
 const onBigPictureEscapeKyedown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscPressed) {
     evt.preventDefault();
     hideBigPicturePopup();
   }

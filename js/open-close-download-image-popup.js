@@ -1,5 +1,6 @@
-import {setDefaultPhotoSize, addResizingButtonEventListener,removeResizingButtonEventListener} from './scale-photo.js';
-import {addChangingEffectEventListener, removeChangingEffectEventListener, removeEffects} from './slider.js';
+import {isEscPressed} from './util.js';
+import {setDefaultPhotoSize, onResizeButtonClick,onCloseButtonClick} from './scale-photo.js';
+import {onEffectChange, onPhotoClose, removeEffects} from './slider.js';
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
@@ -13,12 +14,12 @@ const onPopupEscapeKeydown = (evt) => {
   const hashtagFieldElement = document.querySelector('.text__hashtags');
   const descriptionFieldElement = document.querySelector('.text__description');
 
-  if (evt.key === 'Escape'  && hashtagFieldElement !== document.activeElement && descriptionFieldElement !== document.activeElement) {
+  if (isEscPressed  && hashtagFieldElement !== document.activeElement && descriptionFieldElement !== document.activeElement) {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
 
-  if (evt.key === 'Escape'  && hashtagFieldElement === document.activeElement || evt.key === 'Escape' && descriptionFieldElement === document.activeElement) {
+  if (isEscPressed  && hashtagFieldElement === document.activeElement || isEscPressed && descriptionFieldElement === document.activeElement) {
     evt.target.blur();
   }
 };
@@ -41,16 +42,16 @@ const openDownloadImagePopup = () => {
 
   downloadImageCloseButtonElement.addEventListener('click', closeDownloadImagePopup);
   document.addEventListener('keydown', onPopupEscapeKeydown);
-  removeUploadPopupEventListener();
-  addResizingButtonEventListener();
-  addChangingEffectEventListener();
+  onImageClose();
+  onResizeButtonClick();
+  onEffectChange();
 };
 
-const addUploadPopupEventListener = () => {
+const onImageDownload = () => {
   imageUploadInputElement.addEventListener('change', openDownloadImagePopup);
 };
 
-function removeUploadPopupEventListener () {
+function onImageClose () {
   imageUploadInputElement.removeEventListener('change', openDownloadImagePopup);
 }
 
@@ -64,10 +65,10 @@ function closeDownloadImagePopup () {
 
   downloadImageCloseButtonElement.removeEventListener('click', closeDownloadImagePopup);
   document.removeEventListener('keydown', onPopupEscapeKeydown);
-  addUploadPopupEventListener();
+  onImageDownload();
   setDefaultPhotoSize();
-  removeResizingButtonEventListener();
-  removeChangingEffectEventListener();
+  onCloseButtonClick();
+  onPhotoClose();
 
   noEffectElement.checked = true;
   removeEffects();
@@ -76,4 +77,4 @@ function closeDownloadImagePopup () {
   descriptionFieldElement.value = '';
 }
 
-export {closeDownloadImagePopup, addUploadPopupEventListener};
+export {closeDownloadImagePopup, onImageDownload};

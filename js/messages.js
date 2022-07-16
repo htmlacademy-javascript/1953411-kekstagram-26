@@ -1,11 +1,11 @@
-
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const newSuccessMessage = successTemplate.cloneNode(true);
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-const newErrorMessage = errorTemplate.cloneNode(true);
+import {isEscPressed} from './util.js';
+const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const newSuccessMessage = successTemplateElement.cloneNode(true);
+const errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const newErrorMessage = errorTemplateElement.cloneNode(true);
 
 const onSuccessEscapeKyedown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscPressed) {
     evt.preventDefault();
     closeSuccessPopup();
   }
@@ -30,7 +30,7 @@ const showApprove = () =>  {
 };
 
 const onErrorEscapeKyedown = (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscPressed) {
     evt.preventDefault();
     closeErrorPopup();
   }

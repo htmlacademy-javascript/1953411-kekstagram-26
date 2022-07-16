@@ -19,7 +19,7 @@ const toggleActiveFilter = (target) => {
   target.disabled = true;
 };
 
-const addFilterToggleEventListener = () => {
+const onFilterClick = () => {
   filterContainerElement.addEventListener('click', (evt) => {
     evt.preventDefault();
 
@@ -53,7 +53,7 @@ const filterPhotos = (photos) => {
   }
 };
 
-const addChangeFilterEventListener = (photos) => {
+const onFilterChange = (photos) => {
   filterContainerElement.addEventListener('click', debounce((evt) => {
     evt.preventDefault();
 
@@ -74,4 +74,4 @@ const addChangeFilterEventListener = (photos) => {
   openBigPicture(photos);
 };
 
-export {addFilterToggleEventListener, addChangeFilterEventListener};
+export {onFilterClick, onFilterChange};

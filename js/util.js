@@ -20,6 +20,8 @@ const createNewElement = (tagName, className, textContent) => {
   return newTag;
 };
 
+const isEscPressed = (evt) => evt.key === 'Escape';
+
 const shuffleArray = (data) => {
 
   let i = data.length;
@@ -47,4 +49,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export {checkStringLength, getRandomPositiveInteger, createNewElement, shuffleArray, debounce};
+export {checkStringLength, getRandomPositiveInteger, createNewElement, shuffleArray, debounce, isEscPressed};

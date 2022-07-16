@@ -31,14 +31,14 @@ const decreaseControlValue = () => {
   imageElement.style.transform = `scale(${value / 100})`;
 };
 
-const addResizingButtonEventListener = () => {
+const onResizeButtonClick = () => {
   controlSmallerElement.addEventListener('click', decreaseControlValue);
   controlBiggerElement.addEventListener('click', increaseControlValue);
 };
 
-const removeResizingButtonEventListener = () => {
+const onCloseButtonClick = () => {
   controlSmallerElement.removeEventListener('click', decreaseControlValue);
   controlBiggerElement.removeEventListener('click', increaseControlValue);
 };
 
-export {addResizingButtonEventListener,removeResizingButtonEventListener, setDefaultPhotoSize};
+export {onResizeButtonClick, onCloseButtonClick, setDefaultPhotoSize};
