@@ -6,10 +6,12 @@ const RANDOM_PHOTOS_AMOUNT = 10;
 
 const filterContainerElement = document.querySelector('.img-filters');
 const filterFormElement = filterContainerElement.querySelector('.img-filters__form');
+const filterButtonElements = filterFormElement.querySelectorAll('.img-filters__button');
+const defaulFilterButtonElment =filterFormElement.querySelector('#filter-default');
+const randomFilterButtoElement =filterFormElement.querySelector('#filter-random');
+const discussedFilterButtonElement =filterFormElement.querySelector('#filter-discussed');
 
 const toggleActiveFilter = (target) => {
-  const filterButtonElements = filterFormElement.querySelectorAll('.img-filters__button');
-
   filterButtonElements.forEach((button) => {
     button.classList.remove('img-filters__button--active');
     button.disabled = false;
@@ -30,10 +32,6 @@ const onFilterClick = () => {
 };
 
 const filterPhotos = (photos) => {
-  const defaulFilterButtonElment =filterFormElement.querySelector('#filter-default');
-  const randomFilterButtoElement =filterFormElement.querySelector('#filter-random');
-  const discussedFilterButtonElement =filterFormElement.querySelector('#filter-discussed');
-
   if (defaulFilterButtonElment.classList.contains('img-filters__button--active')) {
     return photos;
   }

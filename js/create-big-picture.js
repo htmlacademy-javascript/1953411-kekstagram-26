@@ -8,6 +8,10 @@ let commentsAmount = SHOW_COMMENTS_AMOUNT;
 
 let commentsLoaderButtonElement = document.querySelector('.social__comments-loader');
 const socialCommentsElement = document.querySelector('.big-picture').querySelector('.social__comments');
+const bigPictureElement = document.querySelector('.big-picture');
+const bigPictureSocialElement = bigPictureElement.querySelector('.big-picture__social');
+const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
+const pictureContainerElement = document.querySelector('.pictures');
 
 const createDomComment = (element) => {
   const newComment = createNewElement('li', 'social__comment');
@@ -70,10 +74,6 @@ const replaceComment = (picture) => {
 };
 
 const replaceBigPictureData = (picture) => {
-  const bigPictureElement = document.querySelector('.big-picture');
-  const bigPictureSocialElement = bigPictureElement.querySelector('.big-picture__social');
-  const bigPictureImgElement = bigPictureElement.querySelector('.big-picture__img').querySelector('img');
-
   commentsAmount = SHOW_COMMENTS_AMOUNT;
 
   bigPictureSocialElement.removeChild(commentsLoaderButtonElement);
@@ -92,7 +92,6 @@ const replaceBigPictureData = (picture) => {
 };
 
 const openBigPicture = (data) => {
-  const pictureContainerElement = document.querySelector('.pictures');
   pictureContainerElement.addEventListener('click', (evt) => {
     if (evt.target.matches('img')) {
       evt.preventDefault();

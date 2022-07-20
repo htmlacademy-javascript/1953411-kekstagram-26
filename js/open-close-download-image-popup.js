@@ -9,11 +9,12 @@ const downloadImagePopupElement = document.querySelector('.img-upload__overlay')
 const downloadImageCloseButtonElement =  document.querySelector('.img-upload__cancel');
 const imageElement = downloadImagePopupElement.querySelector('.img-upload__img');
 const effectsPreviewElements = downloadImagePopupElement.querySelectorAll('.effects__preview');
+const hashtagFieldElement = document.querySelector('.text__hashtags');
+const descriptionFieldElement = document.querySelector('.text__description');
+const noEffectElement = document.querySelector('#effect-none');
+const hashtagFielfElement = document.querySelector('.text__hashtags');
 
 const onPopupEscapeKeydown = (evt) => {
-  const hashtagFieldElement = document.querySelector('.text__hashtags');
-  const descriptionFieldElement = document.querySelector('.text__description');
-
   if (isEscPressed  && hashtagFieldElement !== document.activeElement && descriptionFieldElement !== document.activeElement) {
     evt.preventDefault();
     closeDownloadImagePopup();
@@ -56,10 +57,6 @@ function onImageClose () {
 }
 
 function closeDownloadImagePopup () {
-  const noEffectElement = document.querySelector('#effect-none');
-  const hashtagFielfElement = document.querySelector('.text__hashtags');
-  const descriptionFieldElement = document.querySelector('.text__description');
-
   downloadImagePopupElement.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
