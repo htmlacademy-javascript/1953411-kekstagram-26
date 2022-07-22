@@ -7,18 +7,18 @@ const RANDOM_PHOTOS_AMOUNT = 10;
 const filterContainerElement = document.querySelector('.img-filters');
 const filterFormElement = filterContainerElement.querySelector('.img-filters__form');
 const filterButtonElements = filterFormElement.querySelectorAll('.img-filters__button');
-const defaulFilterButtonElment =filterFormElement.querySelector('#filter-default');
-const randomFilterButtoElement =filterFormElement.querySelector('#filter-random');
-const discussedFilterButtonElement =filterFormElement.querySelector('#filter-discussed');
+const defaulFilterButtonElment = filterFormElement.querySelector('#filter-default');
+const randomFilterButtoElement = filterFormElement.querySelector('#filter-random');
+const discussedFilterButtonElement = filterFormElement.querySelector('#filter-discussed');
 
 const toggleActiveFilter = (target) => {
   filterButtonElements.forEach((button) => {
     button.classList.remove('img-filters__button--active');
-    button.disabled = false;
+    button.removeAttribute('disabled');
   });
 
   target.classList.add('img-filters__button--active');
-  target.disabled = true;
+  target.setAttribute('disabled', 'disabled');
 };
 
 const onFilterClick = () => {

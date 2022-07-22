@@ -60,21 +60,20 @@ const addFieldValidation = () => {
 };
 
 const addBlockButton = () => {
-  submitButtonElement.disabled = true;
+  submitButtonElement.setAttribute('disabled', 'disabled');
   submitButtonElement.textContent = 'публикую...';
 };
 
 const removeBlockButton = () => {
-  submitButtonElement.disabled = false;
+  submitButtonElement.removeAttribute('disabled');
   submitButtonElement.textContent = 'опубликовать';
 };
 
 const addFormValidation = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate();
 
-    if (isValid) {
+    if (pristine.validate()) {
       addBlockButton();
 
       sendData(

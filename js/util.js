@@ -26,13 +26,10 @@ const shuffleArray = (data) => {
 
   let i = data.length;
   let j = 0;
-  let swap;
 
   while (i--) {
     j = getRandomPositiveInteger(0, i);
-    swap = data[i];
-    data[i] = data[j];
-    data[j] = swap;
+    [data[i], data[j]] = [data[j], data[i]];
   }
 
   return data;

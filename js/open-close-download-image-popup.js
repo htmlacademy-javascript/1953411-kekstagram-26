@@ -15,12 +15,12 @@ const noEffectElement = document.querySelector('#effect-none');
 const hashtagFielfElement = document.querySelector('.text__hashtags');
 
 const onPopupEscapeKeydown = (evt) => {
-  if (isEscPressed  && hashtagFieldElement !== document.activeElement && descriptionFieldElement !== document.activeElement) {
+  if (isEscPressed(evt)  && (hashtagFieldElement !== document.activeElement) && (descriptionFieldElement !== document.activeElement)) {
     evt.preventDefault();
     closeDownloadImagePopup();
   }
 
-  if (isEscPressed  && hashtagFieldElement === document.activeElement || isEscPressed && descriptionFieldElement === document.activeElement) {
+  if ((isEscPressed(evt)  && (hashtagFieldElement === document.activeElement)) || (isEscPressed(evt) && (descriptionFieldElement === document.activeElement))) {
     evt.target.blur();
   }
 };

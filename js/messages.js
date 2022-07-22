@@ -5,7 +5,7 @@ const errorTemplateElement = document.querySelector('#error').content.querySelec
 const newErrorMessage = errorTemplateElement.cloneNode(true);
 
 const onSuccessEscapeKyedown = (evt) => {
-  if (isEscPressed) {
+  if (isEscPressed(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
   }
@@ -30,7 +30,7 @@ const showApprove = () =>  {
 };
 
 const onErrorEscapeKyedown = (evt) => {
-  if (isEscPressed) {
+  if (isEscPressed(evt)) {
     evt.preventDefault();
     closeErrorPopup();
   }
@@ -43,7 +43,7 @@ function closeErrorPopup () {
 }
 
 const showError = () => {
-  newErrorMessage.style.zIndex = '100';
+  newErrorMessage.classList.add('error-message__upper-layer');
   document.body.appendChild(newErrorMessage);
 
   const successButtonElement = document.querySelector('.error__button');
