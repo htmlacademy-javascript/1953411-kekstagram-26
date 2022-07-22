@@ -5,7 +5,7 @@ const getData = (onSuccess) => {
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(API_URL.k,
+  fetch(API_URL,
     {
       method: 'POST',
       body,
