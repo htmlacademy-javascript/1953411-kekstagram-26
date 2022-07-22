@@ -1,20 +1,22 @@
+import {isEscPressed} from './util.js';
+
 const bigPictureElement = document.querySelector('.big-picture');
 const closeButtonElement = bigPictureElement.querySelector('.big-picture__cancel');
 
-function onBigPictureEscapeKyedown (evt) {
-  if (evt.key === 'Escape') {
+const onBigPictureEscapeKyedown = (evt) => {
+  if (isEscPressed(evt)) {
     evt.preventDefault();
     hideBigPicturePopup();
   }
-}
+};
 
-function showBigPicturePopup () {
+const showBigPicturePopup = () => {
   bigPictureElement.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
   document.addEventListener('keydown', onBigPictureEscapeKyedown);
   closeButtonElement.addEventListener('click', hideBigPicturePopup);
-}
+};
 
 function hideBigPicturePopup () {
   bigPictureElement.classList.add('hidden');

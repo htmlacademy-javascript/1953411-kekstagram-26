@@ -1,15 +1,13 @@
-function getRandomPositiveInteger (a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
 
   const result = Math.random() * (upper - lower + 1) + lower;
 
   return Math.floor(result);
-}
+};
 
-function checkStringLength (string, length) {
-  return string.length <= length;
-}
+const checkStringLength = (string, length) => string.length <= length;
 
 const createNewElement = (tagName, className, textContent) => {
   const newTag = document.createElement(tagName);
@@ -22,23 +20,22 @@ const createNewElement = (tagName, className, textContent) => {
   return newTag;
 };
 
-function createUniqueArray (array) {
+const isEscPressed = (evt) => evt.key === 'Escape';
 
-  let i = array.length;
+const shuffleArray = (data) => {
+
+  let i = data.length;
   let j = 0;
-  let swap;
 
   while (i--) {
     j = getRandomPositiveInteger(0, i);
-    swap = array[i];
-    array[i] = array[j];
-    array[j] = swap;
+    [data[i], data[j]] = [data[j], data[i]];
   }
 
-  return array;
-}
+  return data;
+};
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
 
   let timeoutId;
 
@@ -47,20 +44,6 @@ function debounce (callback, timeoutDelay = 500) {
 
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
-function throttle (callback, delayBetweenFrames) {
-
-  let lastTime = 0;
-
-  return (...rest) => {
-    const now = new Date();
-
-    if (now - lastTime >= delayBetweenFrames) {
-      callback.apply(this, rest);
-      lastTime = now;
-    }
-  };
-}
-
-export {checkStringLength, getRandomPositiveInteger, createNewElement, createUniqueArray, debounce, throttle};
+export {checkStringLength, getRandomPositiveInteger, createNewElement, shuffleArray, debounce, isEscPressed};
