@@ -31,7 +31,7 @@ const marvinEffectElement = document.querySelector('#effect-marvin');
 const phobosEffectElement = document.querySelector('#effect-phobos');
 const heatEffectElement = document.querySelector('#effect-heat');
 
-function initSlider () {
+const initSlider = () => {
   noEffectElement.checked = true;
 
   sliderContainerElement.classList.add('hidden');
@@ -45,9 +45,9 @@ function initSlider () {
     connect: 'lower',
     start: 1,
   });
-}
+};
 
-function addSliderUpdater () {
+const addSliderUpdater = () => {
   let value = 1;
 
   sliderElement.noUiSlider.on('update', () => {
@@ -84,15 +84,15 @@ function addSliderUpdater () {
 
     effectValueElement.value = value;
   });
-}
+};
 
-function removeEffects () {
+const removeEffects = () => {
   imageElement.style.filter = '';
   imageElement.classList = '';
   sliderContainerElement.classList.add('hidden');
-}
+};
 
-function updateSlider (minValue, maxValue, step) {
+const updateSlider = (minValue, maxValue, step) => {
   sliderElement.noUiSlider.updateOptions({
     range: {
       min: minValue,
@@ -101,63 +101,63 @@ function updateSlider (minValue, maxValue, step) {
     step: step,
     start: maxValue,
   });
-}
+};
 
-function changeCromeEffect () {
+const changeCromeEffect = () => {
   imageElement.classList.add('effects__preview--chrome');
   sliderContainerElement.classList.remove('hidden');
 
   updateSlider(CROME_MIN_VALUE, CROME_MAX_VALUE, CROME_STEP);
-}
+};
 
-function changeSepiaEffect () {
+const changeSepiaEffect = () => {
   imageElement.classList = '';
   imageElement.classList.add('effects__preview--sepia');
   sliderContainerElement.classList.remove('hidden');
 
   updateSlider(SEPIA_MIN_VALUE, SEPIA_MAX_VALUE, SEPIA_STEP);
-}
+};
 
-function changeMarvinEffect () {
+const changeMarvinEffect = () => {
   imageElement.classList = '';
   imageElement.classList.add('effects__preview--marvin');
   sliderContainerElement.classList.remove('hidden');
 
   updateSlider(MARVIN_MIN_VALUE, MARVIN_MAX_VALUE, MARVIN_STEP);
-}
+};
 
-function changePhobosEffect () {
+const changePhobosEffect = () => {
   imageElement.classList = '';
   imageElement.classList.add('effects__preview--phobos');
   sliderContainerElement.classList.remove('hidden');
 
   updateSlider(PHOBOS_MIN_VALUE, PHOBOS_MAX_VALUE, PHOBOS_STEP);
-}
+};
 
-function changeHeatEffect () {
+const changeHeatEffect = () => {
   imageElement.classList = '';
   imageElement.classList.add('effects__preview--heat');
   sliderContainerElement.classList.remove('hidden');
 
   updateSlider(HEAT_MIN_VALUE, HEAT_MAX_VALUE, HEAT_STEP);
-}
+};
 
-function addChangingEffectEventListener () {
+const onEffectChange = () => {
   noEffectElement.addEventListener('click', removeEffects);
   cromeEffectElement.addEventListener('click', changeCromeEffect);
   sepiaEffectElement.addEventListener('click', changeSepiaEffect);
   marvinEffectElement.addEventListener('click', changeMarvinEffect);
   phobosEffectElement.addEventListener('click', changePhobosEffect);
   heatEffectElement.addEventListener('click', changeHeatEffect);
-}
+};
 
-function removeChangingEffectEventListener () {
+const onPhotoClose = () => {
   noEffectElement.removeEventListener('click', removeEffects);
   cromeEffectElement.removeEventListener('click', changeCromeEffect);
   sepiaEffectElement.removeEventListener('click', changeSepiaEffect);
   marvinEffectElement.removeEventListener('click', changeMarvinEffect);
   phobosEffectElement.removeEventListener('click', changePhobosEffect);
   heatEffectElement.removeEventListener('click', changeHeatEffect);
-}
+};
 
-export {addChangingEffectEventListener, removeChangingEffectEventListener, addSliderUpdater, initSlider, removeEffects};
+export {onEffectChange, onPhotoClose, addSliderUpdater, initSlider, removeEffects};

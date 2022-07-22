@@ -1425,3 +1425,7 @@ main {
 .img-upload__field-wrapper:nth-child(2) .form__error {
   bottom: 0;
 }
+
+.error-message__upper-layer {
+  z-index: 100;
+}

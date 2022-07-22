@@ -1,22 +1,15 @@
+import {isEscPressed} from './util.js';
+const successTemplateElement = document.querySelector('#success').content.querySelector('.success');
+const newSuccessMessage = successTemplateElement.cloneNode(true);
+const errorTemplateElement = document.querySelector('#error').content.querySelector('.error');
+const newErrorMessage = errorTemplateElement.cloneNode(true);
 
-const successTemplate = document.querySelector('#success').content.querySelector('.success');
-const newSuccessMessage = successTemplate.cloneNode(true);
-const errorTemplate = document.querySelector('#error').content.querySelector('.error');
-const newErrorMessage = errorTemplate.cloneNode(true);
-
-function onSuccessEscapeKyedown (evt) {
-  if (evt.key === 'Escape') {
+const onSuccessEscapeKyedown = (evt) => {
+  if (isEscPressed(evt)) {
     evt.preventDefault();
     closeSuccessPopup();
   }
-}
-
-function onErrorEscapeKyedown (evt) {
-  if (evt.key === 'Escape') {
-    evt.preventDefault();
-    closeErrorPopup();
-  }
-}
+};
 
 function closeSuccessPopup () {
   document.removeEventListener('keydown', onSuccessEscapeKyedown);
@@ -24,13 +17,7 @@ function closeSuccessPopup () {
   document.removeEventListener('click', closeSuccessPopup);
 }
 
-function closeErrorPopup () {
-  document.removeEventListener('keydown', onErrorEscapeKyedown);
-  document.body.removeChild(newErrorMessage);
-  document.removeEventListener('click', closeErrorPopup);
-}
-
-function showApprove () {
+const showApprove = () =>  {
   document.body.appendChild(newSuccessMessage);
 
   const successButtonElement = document.querySelector('.success__button');
@@ -40,10 +27,23 @@ function showApprove () {
   successButtonElement.addEventListener('click', closeSuccessPopup);
 
   document.addEventListener('click', closeSuccessPopup);
+};
+
+const onErrorEscapeKyedown = (evt) => {
+  if (isEscPressed(evt)) {
+    evt.preventDefault();
+    closeErrorPopup();
+  }
+};
+
+function closeErrorPopup () {
+  document.removeEventListener('keydown', onErrorEscapeKyedown);
+  document.body.removeChild(newErrorMessage);
+  document.removeEventListener('click', closeErrorPopup);
 }
 
-function showError () {
-  newErrorMessage.style.zIndex = '100';
+const showError = () => {
+  newErrorMessage.classList.add('error-message__upper-layer');
   document.body.appendChild(newErrorMessage);
 
   const successButtonElement = document.querySelector('.error__button');
@@ -53,6 +53,6 @@ function showError () {
   successButtonElement.addEventListener('click', closeErrorPopup);
 
   document.addEventListener('click', closeErrorPopup);
-}
+};
 
 export {showApprove, showError};

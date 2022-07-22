@@ -1,8 +1,8 @@
 import {checkStringLength} from './util.js';
 import {sendData} from './network.js';
-import {showApprove, showError} from './success-error.js';
+import {showApprove, showError} from './messages.js';
 
-const MAX_TEXT_LENGTH = 139;
+const MAX_TEXT_LENGTH = 140;
 const MAX_HASHTAG_AMOUNT = 5;
 
 const formElement = document.querySelector('.img-upload__form');
@@ -24,7 +24,7 @@ const pristine = new Pristine(formElement, {
 let hashtagValue = hashtagFielfElement.value;
 let hashtagWords = hashtagValue.split(' ');
 
-function validateHashtag () {
+const validateHashtag = () => {
   hashtagValue = hashtagFielfElement.value.trim();
   const hashtagValues = hashtagValue.split(' ');
   hashtagWords = hashtagValues.filter((word) =>  word !== '');
@@ -35,13 +35,11 @@ function validateHashtag () {
     }
   }
   return true;
-}
+};
 
-function validateHashtagAmount () {
-  return checkStringLength(hashtagWords, MAX_HASHTAG_AMOUNT);
-}
+const validateHashtagAmount = () =>  checkStringLength(hashtagWords, MAX_HASHTAG_AMOUNT);
 
-function validateHashtagUniqueness () {
+const validateHashtagUniqueness = () => {
   for (let i = 0; i < hashtagWords.length; i++) {
     for (let j = i + 1; j < hashtagWords.length; j++) {
       if (hashtagWords[i].toUpperCase() === hashtagWords[j].toUpperCase()) {
@@ -50,35 +48,32 @@ function validateHashtagUniqueness () {
     }
   }
   return true;
-}
+};
 
-function validateTextfield () {
-  return checkStringLength(descriptionFieldElement.value, MAX_TEXT_LENGTH);
-}
+const validateTextfield = () => checkStringLength(descriptionFieldElement.value, MAX_TEXT_LENGTH);
 
-function addFieldValidation () {
+const addFieldValidation = () => {
   pristine.addValidator(hashtagFielfElement, validateHashtag, 'Должно начинаться с # и содержать менее 20 символов!');
   pristine.addValidator(hashtagFielfElement, validateHashtagAmount, 'Можно только 5 хэштегов!');
   pristine.addValidator(hashtagFielfElement, validateHashtagUniqueness, 'Хэштеги должны быть разными!');
   pristine.addValidator(descriptionFieldElement, validateTextfield, 'Должно содержать менее 140 символов!');
-}
+};
 
-function addBlockButton () {
-  submitButtonElement.disabled = true;
+const addBlockButton = () => {
+  submitButtonElement.setAttribute('disabled', 'disabled');
   submitButtonElement.textContent = 'публикую...';
-}
+};
 
-function removeBlockButton () {
-  submitButtonElement.disabled = false;
+const removeBlockButton = () => {
+  submitButtonElement.removeAttribute('disabled');
   submitButtonElement.textContent = 'опубликовать';
-}
+};
 
-function addFormValidation (onSuccess) {
+const addFormValidation = (onSuccess) => {
   formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    const isValid = pristine.validate();
 
-    if (isValid) {
+    if (pristine.validate()) {
       addBlockButton();
 
       sendData(
@@ -95,6 +90,6 @@ function addFormValidation (onSuccess) {
       );
     }
   });
-}
+};
 
 export {addFormValidation, addFieldValidation};

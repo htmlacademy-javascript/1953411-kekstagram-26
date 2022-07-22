@@ -9,36 +9,36 @@ const imageElement = imageBackgroundElement.querySelector('.img-upload__img');
 
 let value = MAX_VALUE;
 
-function setDefaultPhotoSize () {
+const setDefaultPhotoSize = () => {
   value = MAX_VALUE;
   controlValueElement.value = `${value}%`;
   imageElement.style.transform = `scale(${value / 100})`;
-}
+};
 
-function increaseControlValue () {
+const increaseControlValue = () => {
   if (value < MAX_VALUE) {
     value += VALUE_STEP;
   }
   controlValueElement.value = `${value}%`;
   imageElement.style.transform = `scale(${value / 100})`;
-}
+};
 
-function decreaseControlValue () {
+const decreaseControlValue = () => {
   if (value > MIN_VALUE) {
     value -= VALUE_STEP;
   }
   controlValueElement.value = `${value}%`;
   imageElement.style.transform = `scale(${value / 100})`;
-}
+};
 
-function addResizingButtonEventListener () {
+const onResizeButtonClick = () => {
   controlSmallerElement.addEventListener('click', decreaseControlValue);
   controlBiggerElement.addEventListener('click', increaseControlValue);
-}
+};
 
-function removeResizingButtonEventListener () {
+const onCloseButtonClick = () => {
   controlSmallerElement.removeEventListener('click', decreaseControlValue);
   controlBiggerElement.removeEventListener('click', increaseControlValue);
-}
+};
 
-export {addResizingButtonEventListener,removeResizingButtonEventListener, setDefaultPhotoSize};
+export {onResizeButtonClick, onCloseButtonClick, setDefaultPhotoSize};
