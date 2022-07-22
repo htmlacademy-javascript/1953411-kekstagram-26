@@ -93,7 +93,7 @@ const replaceBigPictureData = (picture) => {
 
 const openBigPicture = (data) => {
   pictureContainerElement.addEventListener('click', (evt) => {
-    if (evt.target.matches('img')) {
+    if (evt.target.matches('.picture__img')) {
       evt.preventDefault();
       showBigPicturePopup();
 
